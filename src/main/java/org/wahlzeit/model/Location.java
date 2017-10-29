@@ -1,3 +1,12 @@
+/*
+* Location
+*
+* Version: 1.0
+*
+* Date: 28.10.17
+*
+*/
+
 package org.wahlzeit.model;
 
 public class Location {
