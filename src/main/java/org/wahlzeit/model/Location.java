@@ -6,7 +6,6 @@
 * Date: 28.10.17
 *
 */
-
 package org.wahlzeit.model;
 
 public class Location {
