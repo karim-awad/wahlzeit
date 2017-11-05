@@ -43,20 +43,20 @@ class CoordinateTest {
 	@Test
 	void testGetDistance() {
 		//same coordinates
-		assertEquals(0.0, test.getDistance(test1));
+		assertEquals(0.0, test.getDistance(test1),1e-7);
 		
 		//only differences on one axis
-		assertEquals(21.0, test.getDistance(test2));
-		assertEquals(38.0, test.getDistance(test3));
-		assertEquals(28.0, test.getDistance(test4));
+		assertEquals(21.0, test.getDistance(test2),1e-7);
+		assertEquals(38.0, test.getDistance(test3),1e-7);
+		assertEquals(28.0, test.getDistance(test4),1e-7);
 		
 		//differences on two axes
-		assertEquals(Math.sqrt(5.0), test5.getDistance(test6));
-		assertEquals(Math.sqrt(5.0), test5.getDistance(test7));
-		assertEquals(Math.sqrt(5.0), test5.getDistance(test8));
+		assertEquals(Math.sqrt(5.0), test5.getDistance(test6),1e-7);
+		assertEquals(Math.sqrt(5.0), test5.getDistance(test7),1e-7);
+		assertEquals(Math.sqrt(5.0), test5.getDistance(test8),1e-7);
 		
 		//differences on all axes
-		assertEquals(3.0, test5.getDistance(test9));
+		assertEquals(3.0, test5.getDistance(test9),1e-7);
 	}
 
 	@Test

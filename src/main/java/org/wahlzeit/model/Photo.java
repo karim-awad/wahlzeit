@@ -73,7 +73,7 @@ public class Photo extends DataObject {
 	 *
 	 */
 	protected String ownerId;
-	protected Location location;
+	public Location location;
 
 	/**
 	 * Each photo can be viewed in different sizes (XS, S, M, L, XL)

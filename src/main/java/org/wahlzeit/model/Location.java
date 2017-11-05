@@ -10,7 +10,7 @@ package org.wahlzeit.model;
 
 public class Location {
 	
-	private Coordinate coordinate;
+	public Coordinate coordinate;
 	
 	public Location() {
 		this.coordinate = null;

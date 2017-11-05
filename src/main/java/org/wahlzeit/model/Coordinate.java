@@ -30,8 +30,7 @@ public class Coordinate {
 		double yDist = Math.abs(_y - y);
 		double zDist = Math.abs(_z - z);
 
-		double xyDist = Math.sqrt(Math.pow(xDist, 2.0) + Math.pow(yDist, 2.0));
-		double xyzDist = Math.sqrt(Math.pow(xyDist, 2.0) + Math.pow(zDist, 2.0));
+		double xyzDist = Math.sqrt(Math.pow(xDist, 2.0) + Math.pow(yDist, 2.0) + Math.pow(zDist, 2.0));
 
 		return xyzDist;
 	}
