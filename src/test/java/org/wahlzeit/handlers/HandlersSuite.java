@@ -1,11 +1,11 @@
-package org.wahlzeit.model.persistence;
+package org.wahlzeit.handlers;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ DatastoreAdapterTest.class })
-public class PersistenceSuit {
+@SuiteClasses({ TellFriendTest.class })
+public class HandlersSuite {
 
 }

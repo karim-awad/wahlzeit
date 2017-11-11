@@ -6,7 +6,10 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.wahlzeit.services.mailing.EmailServiceSuite;
 
 @RunWith(Suite.class)
-@SuiteClasses({ EmailAddressTest.class, LogBuilderTest.class, EmailServiceSuite.class})
-public class ServicesSuit {
+@SuiteClasses({ EmailAddressTest.class,
+				LogBuilderTest.class,
+				EmailServiceSuite.class})
+
+public class ServicesSuite {
 
 }
