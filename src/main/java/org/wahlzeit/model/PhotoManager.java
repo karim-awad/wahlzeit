@@ -60,7 +60,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 *
 	 */
-	protected PhotoTagCollector photoTagCollector = null;
+	protected PhotoTagCollector photoTagCollector = null;  
 
 	/**
 	 *
@@ -72,7 +72,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 *
 	 */
-	public static final PhotoManager getInstance() {
+	public static PhotoManager getInstance() {
 		return instance;
 	}
 
