@@ -100,6 +100,10 @@ public class SphericCoordinate implements Coordinate {
 			return false;
 		}
 		SphericCoordinate other = coord.asSphericCoordinate();
+		
+		if (radius == 0 && other.radius == 0) {
+			return true;
+		}
 		if (Math.abs(radius - other.radius) > EPSILON) {
 			return false;
 		}
