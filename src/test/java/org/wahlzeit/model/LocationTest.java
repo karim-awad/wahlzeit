@@ -23,11 +23,11 @@ class LocationTest {
 
 	@BeforeEach
 	public void setUp() {
-		test = new Location(new Coordinate(1.0, 2.0, 10.0));
-		test1 = new Location(new Coordinate(1.0, 2.0, 10.0));
-		test2 = new Location(new Coordinate(1.0, 2.0, 9.0));
-		test3 = new Location(new Coordinate(1.0, 3.0, 10.0));
-		test4 = new Location(new Coordinate(2.0, 2.0, 10.0));
+		test = new Location(new CartesianCoordinate(1.0, 2.0, 10.0));
+		test1 = new Location(new CartesianCoordinate(1.0, 2.0, 10.0));
+		test2 = new Location(new CartesianCoordinate(1.0, 2.0, 9.0));
+		test3 = new Location(new CartesianCoordinate(1.0, 3.0, 10.0));
+		test4 = new Location(new CartesianCoordinate(2.0, 2.0, 10.0));
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ class LocationTest {
 		//test corner cases
 		assertFalse(test.equals(new Location()));
 		assertFalse(test.equals(null));
-		assertFalse(test.equals(new Coordinate(1.0,2.0,3.0)));
+		assertFalse(test.equals(new CartesianCoordinate(1.0,2.0,3.0)));
 		assertTrue(test.equals(test));
 	}
 
