@@ -8,12 +8,13 @@
 */
 package org.wahlzeit.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-class LocationTest {
+public class LocationTest {
 	
 	private Location test;
 	private Location test1;
@@ -21,7 +22,7 @@ class LocationTest {
 	private Location test3;
 	private Location test4;
 
-	@BeforeEach
+	@Before
 	public void setUp() {
 		test = new Location(new CartesianCoordinate(1.0, 2.0, 10.0));
 		test1 = new Location(new CartesianCoordinate(1.0, 2.0, 10.0));

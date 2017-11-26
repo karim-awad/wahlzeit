@@ -10,7 +10,7 @@
 package org.wahlzeit.model;
 
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 
 	private double latitude;
 	private double longitude;
@@ -22,7 +22,9 @@ public class SphericCoordinate implements Coordinate {
 	 * 
 	 */
 	public SphericCoordinate() {
-		// do nothing
+		longitude = 0;
+		latitude = 0;
+		radius = 0;
 	}
 
 	public SphericCoordinate(double latitude, double longitude, double radius) {
@@ -48,17 +50,6 @@ public class SphericCoordinate implements Coordinate {
 	/**
 	 * @methodtype get
 	 * 
-	 * @see org.wahlzeit.model.Coordinate#getCartesianDistance(org.wahlzeit.model.
-	 * Coordinate)
-	 */
-	@Override
-	public double getCartesianDistance(Coordinate coord) {
-		return getDistance(coord);
-	}
-
-	/**
-	 * @methodtype get
-	 * 
 	 * @see org.wahlzeit.model.Coordinate#asSphericCoordinate()
 	 */
 	@Override
@@ -66,15 +57,6 @@ public class SphericCoordinate implements Coordinate {
 		return this;
 	}
 
-	/**
-	 * @metodtype get
-	 * 
-	 * @see org.wahlzeit.model.Coordinate#getSphericDistance()
-	 */
-	@Override
-	public double getSphericDistance(Coordinate coord) {
-		return getDistance(coord);
-	}
 
 	/**
 	 * @methodtype get
@@ -83,9 +65,9 @@ public class SphericCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate coord) {
-		CartesianCoordinate cartesianCoordinate = coord.asCartesianCoordinate();
+		//TODO calculate distance
 
-		return cartesianCoordinate.getDistance(this);
+		return 0.0;
 	}
 
 	/**

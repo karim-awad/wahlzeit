@@ -9,11 +9,17 @@
 
 package org.wahlzeit.model;
 
-public class CartesianCoordinate implements Coordinate{
+public class CartesianCoordinate extends AbstractCoordinate{
 
 	private double x;
 	private double y;
 	private double z;
+	
+	public CartesianCoordinate() {
+		x = 0;
+		y = 0;
+		z = 0;
+	}
 
 	/**@methodtype constructor
 	 * 
@@ -24,12 +30,6 @@ public class CartesianCoordinate implements Coordinate{
 		this.z = z;
 	}
 	
-	/**@methodtype get
-	 * 
-	 */
-	public double getCartesianDistance(Coordinate coordinate) {
-		return getDistance(coordinate);
-	}
 
 	/**@methodtype get
 	 * 
@@ -161,21 +161,14 @@ public class CartesianCoordinate implements Coordinate{
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		
 		double radius = Math.sqrt(Math.pow(x, 2.0) + Math.pow(y, 2.0) + Math.pow(z, 2.0));
+		if(radius == 0) {
+			return new SphericCoordinate(0, 0, 0);
+		}
 		double latitude = Math.acos(z/radius);
 		double longitude = Math.atan2(y, x);
 		
 		return new SphericCoordinate(latitude, longitude, radius);
-	}
-
-	/**
-	 * @methodtype get
-	 * @see org.wahlzeit.model.Coordinate#getSphericDistance()
-	 */
-	@Override
-	public double getSphericDistance(Coordinate coord) {
-		return getDistance(coord);
 	}
 
 }

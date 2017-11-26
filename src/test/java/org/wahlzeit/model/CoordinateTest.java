@@ -8,12 +8,14 @@
 */
 package org.wahlzeit.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-class CoordinateTest {
+public class CoordinateTest {
 	
 	private CartesianCoordinate cartesian;
 	private CartesianCoordinate cartesian1;
@@ -30,7 +32,7 @@ class CoordinateTest {
 	private SphericCoordinate spheric1;
 	private SphericCoordinate spheric2;
 
-	@BeforeEach
+	@Before
 	public void setUp() {
 		cartesian = new CartesianCoordinate(33.0, 52.0, 120.0);
 		cartesian1 = new CartesianCoordinate(33.0, 52.0, 120.0);
@@ -49,7 +51,7 @@ class CoordinateTest {
 	}
 	
 	@Test
-	void testConversion() {
+	public void testConversion() {
 		SphericCoordinate cartToSpher = cartesian.asSphericCoordinate();
 		assertTrue(cartToSpher.isEqual(cartesian));
 		
@@ -60,7 +62,7 @@ class CoordinateTest {
 	}
 	
 	@Test
-	void testGetDistance() {
+	public void testGetDistance() {
 		//same coordinates
 		assertEquals(0.0, cartesian.getDistance(cartesian1),1e-7);
 		assertEquals(0.0, spheric.getDistance(spheric1),1e-7);
@@ -81,7 +83,7 @@ class CoordinateTest {
 	}
 
 	@Test
-	void testEqualsObject() { //also implicitly tests isEqual()
+	public void testEqualsObject() { //also implicitly tests isEqual()
 		
 		assertTrue(cartesian.equals(cartesian1));
 		assertTrue(spheric.equals(spheric1));
