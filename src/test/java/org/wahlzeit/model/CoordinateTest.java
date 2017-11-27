@@ -31,7 +31,10 @@ public class CoordinateTest {
 	private SphericCoordinate spheric;
 	private SphericCoordinate spheric1;
 	private SphericCoordinate spheric2;
-
+	
+	private SphericCoordinate earth1;
+	private SphericCoordinate earth2;
+	
 	@Before
 	public void setUp() {
 		cartesian = new CartesianCoordinate(33.0, 52.0, 120.0);
@@ -48,6 +51,11 @@ public class CoordinateTest {
 		spheric = new SphericCoordinate(33.0, 52.0, 120.0);
 		spheric1 = new SphericCoordinate(33.0, 52.0, 120.0);
 		spheric2 = new SphericCoordinate(33, 52.0, 0);
+		
+		//Berlin
+		earth1 = new SphericCoordinate(52.517, 13.40, 6370);
+		//Tokio
+		earth2 = new SphericCoordinate(35.70, 139.767, 6370);
 	}
 	
 	@Test
@@ -68,6 +76,7 @@ public class CoordinateTest {
 		assertEquals(0.0, spheric.getDistance(spheric1),1e-7);
 		assertEquals(0.0, spheric2.getDistance(cartesian5), 1e-7);
 		
+		
 		//only differences on one axis
 		assertEquals(21.0, cartesian.getDistance(cartesian2),1e-7);
 		assertEquals(38.0, cartesian.getDistance(cartesian3),1e-7);
@@ -80,6 +89,11 @@ public class CoordinateTest {
 		
 		//differences on all axes
 		assertEquals(3.0, cartesian5.getDistance(cartesian9),1e-7);
+		
+		//sphericDistances
+		assertEquals(8918.0, earth1.getSphericDistance(earth2), 1);
+		
+		
 	}
 
 	@Test

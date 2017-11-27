@@ -66,8 +66,18 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public double getDistance(Coordinate coord) {
 		//TODO calculate distance
-
-		return 0.0;
+		SphericCoordinate spherCoord = coord.asSphericCoordinate();
+		double latitude = Math.toRadians(this.latitude);
+		double longitude = Math.toRadians(this.longitude);
+		double otherLatitude = Math.toRadians(spherCoord.getLatitude());
+		double otherLongitude = Math.toRadians(spherCoord.getLongitude());
+		
+		//formula to calculate angle according to Wikipedia
+		double angle = Math.acos(Math.sin(latitude) * Math.sin(otherLatitude) 
+							+ Math.cos(latitude) * Math.cos(otherLatitude)
+									* Math.cos(otherLongitude - longitude));
+		
+		return angle * radius;
 	}
 
 	/**

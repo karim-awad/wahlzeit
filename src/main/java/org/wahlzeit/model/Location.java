@@ -10,34 +10,34 @@ package org.wahlzeit.model;
 
 public class Location {
 	
-	public CartesianCoordinate cartesianCoordinate;
+	public Coordinate coordinate;
 	
 	public Location() {
-		this.cartesianCoordinate = null;
+		this.coordinate = null;
 	}
 
-	public Location(CartesianCoordinate cartesianCoordinate){
-		this.cartesianCoordinate = cartesianCoordinate;
+	public Location(Coordinate coordinate){
+		this.coordinate = coordinate;
 	}
 	
-	public CartesianCoordinate getCoordinate() {
-		return cartesianCoordinate;
+	public Coordinate getCoordinate() {
+		return coordinate;
 	}
 	
-	public void setCoordinate(CartesianCoordinate cartesianCoordinate) {
-		this.cartesianCoordinate = cartesianCoordinate;
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
 	}
 
 	@Override
 	public String toString() {
-		return "Location [" + cartesianCoordinate.toString() + "]";
+		return "Location [" + coordinate.toString() + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cartesianCoordinate == null) ? 0 : cartesianCoordinate.hashCode());
+		result = prime * result + ((coordinate == null) ? 0 : coordinate.hashCode());
 		return result;
 	}
 	
@@ -50,10 +50,10 @@ public class Location {
 		if (getClass() != obj.getClass())
 			return false;
 		Location other = (Location) obj;
-		if (cartesianCoordinate == null) {
-			if (other.cartesianCoordinate != null)
+		if (coordinate == null) {
+			if (other.coordinate != null)
 				return false;
-		} else if (!cartesianCoordinate.equals(other.cartesianCoordinate))
+		} else if (!coordinate.equals(other.coordinate))
 			return false;
 		return true;
 	}
