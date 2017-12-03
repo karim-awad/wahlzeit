@@ -14,6 +14,6 @@ import org.wahlzeit.utils.UtilsSuite;
 				ServicesSuite.class,
 				UtilsSuite.class})
 
-public class WahlzeitTestSuite {
+public class AllTest {
 
 }

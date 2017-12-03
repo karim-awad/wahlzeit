@@ -16,9 +16,9 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	private double z;
 	
 	public CartesianCoordinate() {
-		x = 0;
-		y = 0;
-		z = 0;
+		x = 0.0;
+		y = 0.0;
+		z = 0.0;
 	}
 
 	/**@methodtype constructor
@@ -34,7 +34,9 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	/**@methodtype get
 	 * 
 	 */
-	public double getDistance(Coordinate coordinate) {
+	@Override
+	public double getCartesianDistance(Coordinate coordinate) {
+		assert(coordinate != null);
 		CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
 		double _x = cartesianCoordinate.getX();
 		double _y = cartesianCoordinate.getY();
@@ -90,21 +92,6 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		this.z = z;
 	}
 	
-	/**
-	 * @methodtype compare
-	 */
-	public boolean isEqual(Coordinate coordinate) {
-		if (coordinate == null)
-			return false;
-		CartesianCoordinate other = coordinate.asCartesianCoordinate();
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.getX()))
-			return false;
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.getY()))
-			return false;
-		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.getZ()))
-			return false;
-		return true;
-	}
 
 	/**
 	 * @methodtype conversion 
@@ -123,20 +110,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		return result;
 	}
 	
-	/**
-	 * @methodtype compare 
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
 
-		return isEqual((CartesianCoordinate) obj);
-	}
 	
 	/**
 	 * @methodtype conversion

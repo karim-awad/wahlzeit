@@ -11,7 +11,7 @@ package org.wahlzeit.model;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class LocationTest {
@@ -22,7 +22,7 @@ public class LocationTest {
 	private Location test3;
 	private Location test4;
 
-	@Before
+	@BeforeClass
 	public void setUp() {
 		test = new Location(new CartesianCoordinate(1.0, 2.0, 10.0));
 		test1 = new Location(new CartesianCoordinate(1.0, 2.0, 10.0));

@@ -22,9 +22,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * 
 	 */
 	public SphericCoordinate() {
-		longitude = 0;
-		latitude = 0;
-		radius = 0;
+		longitude = 0.0;
+		latitude = 0.0;
+		radius = 0.0;
 	}
 
 	public SphericCoordinate(double latitude, double longitude, double radius) {
@@ -64,8 +64,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @see org.wahlzeit.model.Coordinate#getDistance(org.wahlzeit.model.Coordinate)
 	 */
 	@Override
-	public double getDistance(Coordinate coord) {
-		//TODO calculate distance
+	public double getSphericDistance(Coordinate coord) {
+		assert(coord != null);
 		SphericCoordinate spherCoord = coord.asSphericCoordinate();
 		double latitude = Math.toRadians(this.latitude);
 		double longitude = Math.toRadians(this.longitude);
@@ -80,34 +80,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return angle * radius;
 	}
 
-	/**
-	 * @methodtype compare)
-	 * 
-	 * @see org.wahlzeit.model.Coordinate#isEqual(org.wahlzeit.model.Coordinate)
-	 */
-	@Override
-	public boolean isEqual(Coordinate coord) {
-
-		if (coord == null) {
-			return false;
-		}
-		SphericCoordinate other = coord.asSphericCoordinate();
-		
-		if (radius == 0 && other.radius == 0) {
-			return true;
-		}
-		if (Math.abs(radius - other.radius) > EPSILON) {
-			return false;
-		}
-		if (Math.abs(longitude - other.longitude) > EPSILON) {
-			return false;
-		}
-		if (Math.abs(latitude - other.latitude) > EPSILON) {
-			return false;
-		}
-
-		return true;
-	}
 
 	/**
 	 * @methodtype get
@@ -168,23 +140,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 		temp = Double.doubleToLongBits(radius);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
-	}
-
-	/**
-	 * @methodtype compare
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SphericCoordinate other = (SphericCoordinate) obj;
-		return isEqual(other);
 	}
 
 	/**

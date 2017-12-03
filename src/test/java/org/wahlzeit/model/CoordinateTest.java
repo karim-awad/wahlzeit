@@ -11,7 +11,7 @@ package org.wahlzeit.model;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -35,7 +35,7 @@ public class CoordinateTest {
 	private SphericCoordinate earth1;
 	private SphericCoordinate earth2;
 	
-	@Before
+	@BeforeClass
 	public void setUp() {
 		cartesian = new CartesianCoordinate(33.0, 52.0, 120.0);
 		cartesian1 = new CartesianCoordinate(33.0, 52.0, 120.0);
