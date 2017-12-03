@@ -3,6 +3,8 @@
  */
 package org.wahlzeit.model;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * @author karim
  *
@@ -18,11 +20,22 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public abstract CartesianCoordinate asCartesianCoordinate();
 	
-	/* (non-Javadoc)
-	 * @see org.wahlzeit.model.Coordinate#getCartesianDistance(org.wahlzeit.model.Coordinate)
-	 */
-	@Override
+
 	public double getCartesianDistance(Coordinate coord) {
+		assertClassInvariants();
+		//preconditions
+		assertNotNull(coord);
+		
+		double ret = doGetCartesianDistance(coord);
+		
+		//postconditions
+		assert(ret >= 0);
+		
+		assertClassInvariants();
+		return ret;
+	}
+	
+	private double doGetCartesianDistance(Coordinate coord) {
 		//CartesianCoordinate reimplements this method
 		return coord.asCartesianCoordinate().getCartesianDistance(this);
 	}
@@ -35,21 +48,42 @@ public abstract class AbstractCoordinate implements Coordinate {
 	
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.Coordinate#getSphericDistance(org.wahlzeit.model.Coordinate)
+	 * SphericCoordinate reimplements this method
 	 */
 	@Override
 	public double getSphericDistance(Coordinate coord) {
+		assertClassInvariants();
+		//preconditions
+		assertNotNull(coord);
+		
+		double ret = doGetSphericDistance(coord);
+		
+		//postconditions
+		assert(ret >= 0);
+				
+		assertClassInvariants();
+		return ret;
+	}
+	
+	private double doGetSphericDistance(Coordinate coord) {
 		//SphericCoordinate reimplements this method
 		return coord.asSphericCoordinate().getSphericDistance(this);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.Coordinate#getDistance(org.wahlzeit.model.Coordinate)
+	 * using cartesianDistance to allow unified comparisons
 	 */
 	@Override
 	public double getDistance(Coordinate coord) {
-		//using cartesianDistance to allow unified comparisons
 		return getCartesianDistance(coord);
 	}
+	
+	/* (non-Javadoc)
+	* @see org.wahlzeit.model.Coordinate#assertClassInvariants()
+	*/
+	@Override
+	public abstract void assertClassInvariants();
 
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.Coordinate#isEqual(org.wahlzeit.model.Coordinate)

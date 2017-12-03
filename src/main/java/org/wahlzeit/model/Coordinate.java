@@ -49,4 +49,11 @@ public interface Coordinate {
 	 */
 	public boolean isEqual(Coordinate coord);
 	
+	/** 
+	 * @methodtype Assertion
+	 * 
+	 * assert correct state of class
+	 */
+	public void assertClassInvariants();
+	
 }

@@ -39,7 +39,6 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate coordinate) {
-		assert(coordinate != null);
 		CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
 		double _x = cartesianCoordinate.getX();
 		double _y = cartesianCoordinate.getY();
@@ -146,6 +145,14 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		double longitude = Math.atan2(y, x);
 		
 		return new SphericCoordinate(latitude, longitude, radius);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.wahlzeit.model.AbstractCoordinate#assertClassInvariants()
+	 */
+	@Override
+	public void assertClassInvariants() {
+		//all values possible	
 	}
 
 }

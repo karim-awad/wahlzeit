@@ -65,7 +65,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double getSphericDistance(Coordinate coord) {
-		assert(coord != null);
 		SphericCoordinate spherCoord = coord.asSphericCoordinate();
 		double latitude = Math.toRadians(this.latitude);
 		double longitude = Math.toRadians(this.longitude);
@@ -150,6 +149,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public String toString() {
 		return "SphericCoordinate [latitude=" + latitude + ", longitude=" + longitude + ", radius=" + radius + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see org.wahlzeit.model.AbstractCoordinate#assertClassInvariants()
+	 */
+	@Override
+	public void assertClassInvariants() {
+		assert(longitude >= 0);
+		assert(latitude >= 0);
+		assert(radius >= 0);
 	}
 
 }
