@@ -3,7 +3,6 @@
  */
 package org.wahlzeit.model;
 
-import static org.junit.Assert.assertNotNull;
 
 /**
  * @author karim
@@ -24,7 +23,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	public double getCartesianDistance(Coordinate coord) {
 		assertClassInvariants();
 		//preconditions
-		assertNotNull(coord);
+		assert(coord != null);
 		
 		double ret = doGetCartesianDistance(coord);
 		
@@ -54,7 +53,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	public double getSphericDistance(Coordinate coord) {
 		assertClassInvariants();
 		//preconditions
-		assertNotNull(coord);
+		assert(coord != null);
 		
 		double ret = doGetSphericDistance(coord);
 		
