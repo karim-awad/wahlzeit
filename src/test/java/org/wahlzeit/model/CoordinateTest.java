@@ -11,11 +11,16 @@ package org.wahlzeit.model;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 
 public class CoordinateTest {
+	
+	/**
+	 * 
+	 */
+	private static final double EPSILON = 1e-7;
 	
 	private CartesianCoordinate cartesian;
 	private CartesianCoordinate cartesian1;
@@ -35,7 +40,7 @@ public class CoordinateTest {
 	private SphericCoordinate earth1;
 	private SphericCoordinate earth2;
 	
-	@BeforeClass
+	@Before
 	public void setUp() {
 		cartesian = new CartesianCoordinate(33.0, 52.0, 120.0);
 		cartesian1 = new CartesianCoordinate(33.0, 52.0, 120.0);
@@ -72,23 +77,23 @@ public class CoordinateTest {
 	@Test
 	public void testGetDistance() {
 		//same coordinates
-		assertEquals(0.0, cartesian.getDistance(cartesian1),1e-7);
-		assertEquals(0.0, spheric.getDistance(spheric1),1e-7);
-		assertEquals(0.0, spheric2.getDistance(cartesian5), 1e-7);
+		assertEquals(0.0, cartesian.getDistance(cartesian1),EPSILON);
+		assertEquals(0.0, spheric.getDistance(spheric1),EPSILON);
+		assertEquals(0.0, spheric2.getDistance(cartesian5), EPSILON);
 		
 		
 		//only differences on one axis
-		assertEquals(21.0, cartesian.getDistance(cartesian2),1e-7);
-		assertEquals(38.0, cartesian.getDistance(cartesian3),1e-7);
-		assertEquals(28.0, cartesian.getDistance(cartesian4),1e-7);
+		assertEquals(21.0, cartesian.getDistance(cartesian2),EPSILON);
+		assertEquals(38.0, cartesian.getDistance(cartesian3),EPSILON);
+		assertEquals(28.0, cartesian.getDistance(cartesian4),EPSILON);
 		
 		//differences on two axes
-		assertEquals(Math.sqrt(5.0), cartesian5.getDistance(cartesian6),1e-7);
-		assertEquals(Math.sqrt(5.0), cartesian5.getDistance(cartesian7),1e-7);
-		assertEquals(Math.sqrt(5.0), cartesian5.getDistance(cartesian8),1e-7);
+		assertEquals(Math.sqrt(5.0), cartesian5.getDistance(cartesian6),EPSILON);
+		assertEquals(Math.sqrt(5.0), cartesian5.getDistance(cartesian7),EPSILON);
+		assertEquals(Math.sqrt(5.0), cartesian5.getDistance(cartesian8),EPSILON);
 		
 		//differences on all axes
-		assertEquals(3.0, cartesian5.getDistance(cartesian9),1e-7);
+		assertEquals(3.0, cartesian5.getDistance(cartesian9),EPSILON);
 		
 		//sphericDistances
 		assertEquals(8918.0, earth1.getSphericDistance(earth2), 1);

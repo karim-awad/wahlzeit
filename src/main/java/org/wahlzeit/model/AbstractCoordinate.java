@@ -9,7 +9,9 @@ package org.wahlzeit.model;
  */
 public abstract class AbstractCoordinate implements Coordinate {
 
-	private static final double MINDISTANCE = 0.5;
+	//sets maximal distance between two coordinates, so that they can still be considered equal
+	private static final double MAXDISTANCE = 0.5;
+	
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.Coordinate#asCartesianCoordinate()
 	 */
@@ -58,7 +60,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 			return false;
 		}
 		
-		if(coord.getDistance(this) > MINDISTANCE) {
+		if(coord.getDistance(this) > MAXDISTANCE) {
 			return false;
 		}
 		

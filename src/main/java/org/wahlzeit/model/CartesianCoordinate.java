@@ -15,6 +15,9 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	private double y;
 	private double z;
 	
+	/**@methodtype constructor
+	 * 
+	 */
 	public CartesianCoordinate() {
 		x = 0.0;
 		y = 0.0;

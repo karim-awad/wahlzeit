@@ -13,7 +13,6 @@ public class Location {
 	public Coordinate coordinate;
 	
 	public Location() {
-		this.coordinate = null;
 	}
 
 	public Location(Coordinate coordinate){
