@@ -31,6 +31,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
+		//TODO add invariance
 	}
 
 	/**
@@ -156,6 +157,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public void assertClassInvariants() {
+		//TODO isangular
 		assert(longitude >= 0);
 		assert(latitude >= 0);
 		assert(radius >= 0);

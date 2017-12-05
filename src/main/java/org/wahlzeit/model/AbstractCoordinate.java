@@ -4,10 +4,6 @@
 package org.wahlzeit.model;
 
 
-/**
- * @author karim
- *
- */
 public abstract class AbstractCoordinate implements Coordinate {
 
 	//sets maximal distance between two coordinates, so that they can still be considered equal

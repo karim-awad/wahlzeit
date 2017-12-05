@@ -5,11 +5,13 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.services.ObjectManager;
 import com.google.appengine.api.datastore.Key;
+import com.googlecode.objectify.annotation.Subclass;
 
 /**
  * @author Karim Awad
  *
  */
+@Subclass
 public class OwlPhoto extends Photo {
 
 	private Owl owl;

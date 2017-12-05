@@ -54,6 +54,7 @@ public interface Coordinate {
 	 * 
 	 * assert correct state of class
 	 */
+	//TODO protected
 	public void assertClassInvariants();
 	
 }

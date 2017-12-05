@@ -153,6 +153,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	@Override
 	public void assertClassInvariants() {
 		//all values possible	
+		//TODO isfinite, nan
 	}
 
 }
