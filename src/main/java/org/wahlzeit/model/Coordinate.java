@@ -48,13 +48,5 @@ public interface Coordinate {
 	 * tests equality of coordinates
 	 */
 	public boolean isEqual(Coordinate coord);
-	
-	/** 
-	 * @methodtype Assertion
-	 * 
-	 * assert correct state of class
-	 */
-	//TODO protected
-	public void assertClassInvariants();
-	
+
 }

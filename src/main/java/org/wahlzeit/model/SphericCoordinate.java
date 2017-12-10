@@ -9,6 +9,7 @@
 
 package org.wahlzeit.model;
 
+import static org.wahlzeit.utils.Assertions.*;
 
 public class SphericCoordinate extends AbstractCoordinate {
 
@@ -25,13 +26,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 		longitude = 0.0;
 		latitude = 0.0;
 		radius = 0.0;
+		
+		assertClassInvariants();
 	}
 
 	public SphericCoordinate(double latitude, double longitude, double radius) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
-		//TODO add invariance
+		
+		assertClassInvariants();
 	}
 
 	/**
@@ -41,6 +45,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
+		assertClassInvariants();
+		
 		double x = radius * Math.sin(latitude) * Math.cos(longitude);
 		double y = radius * Math.sin(latitude) * Math.sin(longitude);
 		double z = radius * Math.cos(latitude);
@@ -55,6 +61,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
+		assertClassInvariants();
 		return this;
 	}
 
@@ -66,6 +73,18 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public double getSphericDistance(Coordinate coord) {
+		assertClassInvariants();
+		assertNotNull(coord, "Coordinate should not be null!");
+		
+		double ret = doGetSphericDistance(coord);
+		
+		assertValidDistance(ret, "Invalid Distance!");
+		assertClassInvariants();
+		
+		return ret;
+	}
+	
+	private double doGetSphericDistance(Coordinate coord) {
 		SphericCoordinate spherCoord = coord.asSphericCoordinate();
 		double latitude = Math.toRadians(this.latitude);
 		double longitude = Math.toRadians(this.longitude);
@@ -85,6 +104,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype get
 	 */
 	public double getLatitude() {
+		assertClassInvariants();
 		return latitude;
 	}
 
@@ -93,12 +113,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
+		assertClassInvariants();
 	}
 
 	/**
 	 * @methodtype get
 	 */
 	public double getLongitude() {
+		assertClassInvariants();
 		return longitude;
 	}
 
@@ -107,12 +129,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+		assertClassInvariants();
 	}
 
 	/**
 	 * @methodtype get
 	 */
 	public double getRadius() {
+		assertClassInvariants();
 		return radius;
 	}
 
@@ -121,6 +145,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	public void setRadius(double radius) {
 		this.radius = radius;
+		assertClassInvariants();
 	}
 
 	/**
@@ -130,6 +155,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public int hashCode() {
+		assertClassInvariants();
 		final int prime = 31;
 		int result = 1;
 		long temp;
@@ -149,6 +175,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public String toString() {
+		assertClassInvariants();
 		return "SphericCoordinate [latitude=" + latitude + ", longitude=" + longitude + ", radius=" + radius + "]";
 	}
 
@@ -158,9 +185,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 	@Override
 	public void assertClassInvariants() {
 		//TODO isangular
-		assert(longitude >= 0);
-		assert(latitude >= 0);
-		assert(radius >= 0);
+		if(longitude < 0 || latitude < 0 || radius < 0) {
+			throw new IllegalStateException();
+		};
+
 	}
 
 }

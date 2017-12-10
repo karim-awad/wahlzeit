@@ -9,6 +9,7 @@
 package org.wahlzeit.model;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -71,6 +72,68 @@ public class CoordinateTest {
 		CartesianCoordinate spherToCart = spheric.asCartesianCoordinate();
 		assertTrue(spherToCart.isEqual(spheric));
 		
+		
+	}
+	
+	@Test()
+	public void testClassInvariants() {
+		Coordinate test;
+		try{
+			test = new SphericCoordinate(0, 0, -1);
+			fail();}
+		catch(IllegalStateException e) {};
+		
+		try{
+			test = new SphericCoordinate(0, -1, 0);
+			fail();}
+		catch(IllegalStateException e) {};
+		
+		try{
+			test = new SphericCoordinate(0, -1, 0);
+			fail();}
+		catch(IllegalStateException e) {};
+		
+		try{
+			test = new SphericCoordinate(-1, 0, 0);
+			fail();}
+		catch(IllegalStateException e) {};
+		
+		try{
+			test = new CartesianCoordinate(0, 0, Double.NaN);
+			fail();}
+		catch(IllegalStateException e) {};
+		
+		try{
+			test = new CartesianCoordinate(0, Double.NEGATIVE_INFINITY, 0);
+			fail();}
+		catch(IllegalStateException e) {};
+		
+		CartesianCoordinate test1 = new CartesianCoordinate(0, 0, -1);
+		try{
+			test1.setX(Double.NaN);
+			fail();
+			}
+		catch(IllegalStateException e) {};
+		
+		try{
+			test1.setX(Double.NEGATIVE_INFINITY);
+			fail();
+			}
+		catch(IllegalStateException e) {};
+		
+		SphericCoordinate test2 = new SphericCoordinate();
+		
+		try{
+			test2.setRadius(-1);
+			fail();
+			}
+		catch(IllegalStateException e) {};
+		
+		try{
+			test2.setLatitude(Double.NaN);
+			fail();
+			}
+		catch(IllegalStateException e) {};
 		
 	}
 	

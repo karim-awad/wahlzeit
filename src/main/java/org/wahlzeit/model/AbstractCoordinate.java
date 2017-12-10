@@ -2,6 +2,7 @@
  * 
  */
 package org.wahlzeit.model;
+import static org.wahlzeit.utils.Assertions.*;
 
 
 public abstract class AbstractCoordinate implements Coordinate {
@@ -71,24 +72,22 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getDistance(Coordinate coord) {
+		assertClassInvariants();
 		return getCartesianDistance(coord);
 	}
 	
-	/* (non-Javadoc)
-	* @see org.wahlzeit.model.Coordinate#assertClassInvariants()
-	*/
-	@Override
-	public abstract void assertClassInvariants();
+	/*
+	 * @methodtype Assertion
+	 */
+	protected abstract void assertClassInvariants();
 
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.Coordinate#isEqual(org.wahlzeit.model.Coordinate)
 	 */
 	@Override
 	public boolean isEqual(Coordinate coord) {
-		if(coord == null) {
-			return false;
-		}
-		
+		assertNotNull(coord, "Coordinate should not be null!");
+		assertClassInvariants();
 		if(coord.getDistance(this) > MAXDISTANCE) {
 			return false;
 		}
@@ -101,6 +100,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		assertClassInvariants();
 		if (this == obj)
 			return true;
 		if (obj == null)

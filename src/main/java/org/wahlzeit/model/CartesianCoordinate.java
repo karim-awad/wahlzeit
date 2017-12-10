@@ -9,6 +9,10 @@
 
 package org.wahlzeit.model;
 
+import static org.wahlzeit.utils.Assertions.*;
+
+import com.google.appengine.api.memcache.InvalidValueException;
+
 public class CartesianCoordinate extends AbstractCoordinate{
 
 	private double x;
@@ -22,6 +26,8 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
+		
+		assertClassInvariants();
 	}
 
 	/**@methodtype constructor
@@ -31,6 +37,8 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		
+		assertClassInvariants();
 	}
 	
 
@@ -39,6 +47,18 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate coordinate) {
+		assertClassInvariants();		
+		assertNotNull(coordinate, "Coordinate should not be null!");
+		
+		double ret = doGetCartesianCoordinate(coordinate);
+		
+		assertValidDistance(ret, "Invalid Distance!");		
+		assertClassInvariants();
+		
+		return ret;
+	}
+	
+	private double doGetCartesianCoordinate(Coordinate coordinate) {
 		CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
 		double _x = cartesianCoordinate.getX();
 		double _y = cartesianCoordinate.getY();
@@ -57,6 +77,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype get 
 	 */
 	public double getX() {
+		assertClassInvariants();
 		return x;
 	}
 	
@@ -64,6 +85,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype get 
 	 */
 	public double getY() {
+		assertClassInvariants();
 		return y;
 	}
 	
@@ -71,6 +93,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype get 
 	 */
 	public double getZ() {
+		assertClassInvariants();
 		return z;
 	}
 	/**
@@ -78,6 +101,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	public void setX(double x) {
 		this.x = x;
+		assertClassInvariants();
 	}
 	
 	/**
@@ -85,6 +109,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	public void setY(double y) {
 		this.y = y;
+		assertClassInvariants();
 	}
 	
 	/**
@@ -92,6 +117,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	public void setZ(double z) {
 		this.z = z;
+		assertClassInvariants();
 	}
 	
 
@@ -100,6 +126,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public int hashCode() {
+		assertClassInvariants();
 		final int prime = 31;
 		int result = 1;
 		long temp;
@@ -119,6 +146,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public String toString() {
+		assertClassInvariants();
 		return "CartesianCoordinate [x=" + x + ", y=" + y + ", z=" + z + "]";
 	}
 
@@ -127,6 +155,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
+		assertClassInvariants();
 		return this;
 	}
 
@@ -137,6 +166,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
+		assertClassInvariants();
 		double radius = Math.sqrt(Math.pow(x, 2.0) + Math.pow(y, 2.0) + Math.pow(z, 2.0));
 		if(radius == 0) {
 			return new SphericCoordinate(0, 0, 0);
@@ -152,8 +182,14 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public void assertClassInvariants() {
-		//all values possible	
-		//TODO isfinite, nan
+		try {		
+			assertValidDouble(x, "Invalid X Value!");
+			assertValidDouble(y, "Invalid Y Value!");
+			assertValidDouble(z, "Invalid Z Value!");
+		}
+		catch(InvalidValueException e) {
+			throw new IllegalStateException("Illegal state of coordinate!");
+		}
 	}
 
 }
