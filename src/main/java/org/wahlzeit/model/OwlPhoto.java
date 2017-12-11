@@ -3,14 +3,8 @@
  */
 package org.wahlzeit.model;
 
-import org.wahlzeit.services.ObjectManager;
-import com.google.appengine.api.datastore.Key;
 import com.googlecode.objectify.annotation.Entity;
 
-/**
- * @author Karim Awad
- *
- */
 @Entity
 public class OwlPhoto extends Photo {
 

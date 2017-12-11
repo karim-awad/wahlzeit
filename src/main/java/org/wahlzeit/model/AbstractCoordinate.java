@@ -4,6 +4,8 @@
 package org.wahlzeit.model;
 import static org.wahlzeit.utils.Assertions.*;
 
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
+
 
 public abstract class AbstractCoordinate implements Coordinate {
 
@@ -14,10 +16,10 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @see org.wahlzeit.model.Coordinate#asCartesianCoordinate()
 	 */
 	@Override
-	public abstract CartesianCoordinate asCartesianCoordinate();
+	public abstract CartesianCoordinate asCartesianCoordinate() throws IllegalCoordinateException;
 	
 
-	public double getCartesianDistance(Coordinate coord) {
+	public double getCartesianDistance(Coordinate coord) throws IllegalCoordinateException{
 		assertClassInvariants();
 		//preconditions
 		assert(coord != null);
@@ -31,7 +33,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 		return ret;
 	}
 	
-	private double doGetCartesianDistance(Coordinate coord) {
+	private double doGetCartesianDistance(Coordinate coord) throws IllegalCoordinateException {
 		//CartesianCoordinate reimplements this method
 		return coord.asCartesianCoordinate().getCartesianDistance(this);
 	}
@@ -40,14 +42,14 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * @see org.wahlzeit.model.Coordinate#asSphericCoordinate()
 	 */
 	@Override
-	public abstract SphericCoordinate asSphericCoordinate();
+	public abstract SphericCoordinate asSphericCoordinate() throws IllegalCoordinateException;
 	
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.Coordinate#getSphericDistance(org.wahlzeit.model.Coordinate)
 	 * SphericCoordinate reimplements this method
 	 */
 	@Override
-	public double getSphericDistance(Coordinate coord) {
+	public double getSphericDistance(Coordinate coord) throws IllegalCoordinateException {
 		assertClassInvariants();
 		//preconditions
 		assert(coord != null);
@@ -61,7 +63,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 		return ret;
 	}
 	
-	private double doGetSphericDistance(Coordinate coord) {
+	private double doGetSphericDistance(Coordinate coord) throws IllegalCoordinateException {
 		//SphericCoordinate reimplements this method
 		return coord.asSphericCoordinate().getSphericDistance(this);
 	}
@@ -71,23 +73,21 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 * using cartesianDistance to allow unified comparisons
 	 */
 	@Override
-	public double getDistance(Coordinate coord) {
-		assertClassInvariants();
+	public double getDistance(Coordinate coord) throws IllegalCoordinateException {
 		return getCartesianDistance(coord);
 	}
 	
 	/*
 	 * @methodtype Assertion
 	 */
-	protected abstract void assertClassInvariants();
+	protected abstract void assertClassInvariants() throws IllegalCoordinateException;
 
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.Coordinate#isEqual(org.wahlzeit.model.Coordinate)
 	 */
 	@Override
-	public boolean isEqual(Coordinate coord) {
+	public boolean isEqual(Coordinate coord) throws IllegalCoordinateException {
 		assertNotNull(coord, "Coordinate should not be null!");
-		assertClassInvariants();
 		if(coord.getDistance(this) > MAXDISTANCE) {
 			return false;
 		}
@@ -100,7 +100,6 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		assertClassInvariants();
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -108,7 +107,12 @@ public abstract class AbstractCoordinate implements Coordinate {
 		if (getClass() != obj.getClass())
 			return false;
 
-		return isEqual((Coordinate) obj);
+		try {
+			return isEqual((Coordinate) obj);
+		} catch (IllegalCoordinateException e) {
+			// TODO figure out, what to do here
+			return false;
+		}
 	}
 
 }

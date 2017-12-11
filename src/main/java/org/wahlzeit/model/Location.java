@@ -8,6 +8,8 @@
 */
 package org.wahlzeit.model;
 
+import static org.wahlzeit.utils.Assertions.assertNotNull;
+
 public class Location {
 	
 	public Coordinate coordinate;
@@ -16,6 +18,7 @@ public class Location {
 	}
 
 	public Location(Coordinate coordinate){
+		assertNotNull(coordinate, "Coordinate should not be null!");
 		this.coordinate = coordinate;
 	}
 	
@@ -24,6 +27,7 @@ public class Location {
 	}
 	
 	public void setCoordinate(Coordinate coordinate) {
+		assertNotNull(coordinate, "Coordinate should not be null!");
 		this.coordinate = coordinate;
 	}
 
@@ -56,4 +60,5 @@ public class Location {
 			return false;
 		return true;
 	}
+
 }

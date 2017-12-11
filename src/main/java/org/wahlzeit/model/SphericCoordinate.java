@@ -10,6 +10,7 @@
 package org.wahlzeit.model;
 
 import static org.wahlzeit.utils.Assertions.*;
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
 public class SphericCoordinate extends AbstractCoordinate {
 
@@ -19,10 +20,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	static final double EPSILON = 0.0001;
 
-	/**@methodtype constructor
+	/**@throws IllegalCoordinateException 
+	 * @methodtype constructor
 	 * 
 	 */
-	public SphericCoordinate() {
+	public SphericCoordinate() throws IllegalCoordinateException {
 		longitude = 0.0;
 		latitude = 0.0;
 		radius = 0.0;
@@ -30,7 +32,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 	}
 
-	public SphericCoordinate(double latitude, double longitude, double radius) {
+	public SphericCoordinate(double latitude, double longitude, double radius) throws IllegalCoordinateException {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
@@ -39,13 +41,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype conversion
 	 * 
 	 * @see org.wahlzeit.model.Coordinate#asCartesianCoordinate()
 	 */
 	@Override
-	public CartesianCoordinate asCartesianCoordinate() {
-		assertClassInvariants();
+	public CartesianCoordinate asCartesianCoordinate() throws IllegalCoordinateException {
 		
 		double x = radius * Math.sin(latitude) * Math.cos(longitude);
 		double y = radius * Math.sin(latitude) * Math.sin(longitude);
@@ -61,18 +63,18 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
-		assertClassInvariants();
 		return this;
 	}
 
 
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype get
 	 * 
 	 * @see org.wahlzeit.model.Coordinate#getDistance(org.wahlzeit.model.Coordinate)
 	 */
 	@Override
-	public double getSphericDistance(Coordinate coord) {
+	public double getSphericDistance(Coordinate coord) throws IllegalCoordinateException {
 		assertClassInvariants();
 		assertNotNull(coord, "Coordinate should not be null!");
 		
@@ -80,11 +82,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 		
 		assertValidDistance(ret, "Invalid Distance!");
 		assertClassInvariants();
-		
 		return ret;
 	}
 	
-	private double doGetSphericDistance(Coordinate coord) {
+	private double doGetSphericDistance(Coordinate coord) throws IllegalCoordinateException {
 		SphericCoordinate spherCoord = coord.asSphericCoordinate();
 		double latitude = Math.toRadians(this.latitude);
 		double longitude = Math.toRadians(this.longitude);
@@ -104,14 +105,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype get
 	 */
 	public double getLatitude() {
-		assertClassInvariants();
 		return latitude;
 	}
 
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype set
 	 */
-	public void setLatitude(double latitude) {
+	public void setLatitude(double latitude) throws IllegalCoordinateException {
 		this.latitude = latitude;
 		assertClassInvariants();
 	}
@@ -120,14 +121,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype get
 	 */
 	public double getLongitude() {
-		assertClassInvariants();
 		return longitude;
 	}
 
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype set
 	 */
-	public void setLongitude(double longitude) {
+	public void setLongitude(double longitude) throws IllegalCoordinateException {
 		this.longitude = longitude;
 		assertClassInvariants();
 	}
@@ -136,14 +137,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype get
 	 */
 	public double getRadius() {
-		assertClassInvariants();
 		return radius;
 	}
 
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype set
 	 */
-	public void setRadius(double radius) {
+	public void setRadius(double radius) throws IllegalCoordinateException {
 		this.radius = radius;
 		assertClassInvariants();
 	}
@@ -155,7 +156,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public int hashCode() {
-		assertClassInvariants();
 		final int prime = 31;
 		int result = 1;
 		long temp;
@@ -175,7 +175,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public String toString() {
-		assertClassInvariants();
 		return "SphericCoordinate [latitude=" + latitude + ", longitude=" + longitude + ", radius=" + radius + "]";
 	}
 
@@ -183,10 +182,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @see org.wahlzeit.model.AbstractCoordinate#assertClassInvariants()
 	 */
 	@Override
-	public void assertClassInvariants() {
-		//TODO isangular
+	public void assertClassInvariants() throws IllegalCoordinateException {
 		if(longitude < 0 || latitude < 0 || radius < 0) {
-			throw new IllegalStateException();
+			throw new IllegalCoordinateException("Invalid state of spheric Coordinate!");
 		};
 
 	}

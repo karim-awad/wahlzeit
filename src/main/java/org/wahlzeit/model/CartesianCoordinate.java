@@ -10,6 +10,7 @@
 package org.wahlzeit.model;
 
 import static org.wahlzeit.utils.Assertions.*;
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
 import com.google.appengine.api.memcache.InvalidValueException;
 
@@ -19,10 +20,11 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	private double y;
 	private double z;
 	
-	/**@methodtype constructor
+	/**@throws IllegalCoordinateException 
+	 * @methodtype constructor
 	 * 
 	 */
-	public CartesianCoordinate() {
+	public CartesianCoordinate() throws IllegalCoordinateException {
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
@@ -30,10 +32,11 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		assertClassInvariants();
 	}
 
-	/**@methodtype constructor
+	/**@throws IllegalCoordinateException 
+	 * @methodtype constructor
 	 * 
 	 */
-	public CartesianCoordinate(double x, double y, double z) {
+	public CartesianCoordinate(double x, double y, double z) throws IllegalCoordinateException {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -42,23 +45,23 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	}
 	
 
-	/**@methodtype get
+	/**@throws IllegalCoordinateException 
+	 * @methodtype get
 	 * 
 	 */
 	@Override
-	public double getCartesianDistance(Coordinate coordinate) {
-		assertClassInvariants();		
+	public double getCartesianDistance(Coordinate coordinate) throws IllegalCoordinateException {
+		assertClassInvariants();
 		assertNotNull(coordinate, "Coordinate should not be null!");
 		
 		double ret = doGetCartesianCoordinate(coordinate);
 		
-		assertValidDistance(ret, "Invalid Distance!");		
+		assertValidDistance(ret, "Invalid Distance!");	
 		assertClassInvariants();
-		
 		return ret;
 	}
 	
-	private double doGetCartesianCoordinate(Coordinate coordinate) {
+	private double doGetCartesianCoordinate(Coordinate coordinate) throws IllegalCoordinateException {
 		CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
 		double _x = cartesianCoordinate.getX();
 		double _y = cartesianCoordinate.getY();
@@ -77,45 +80,47 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype get 
 	 */
 	public double getX() {
-		assertClassInvariants();
 		return x;
 	}
 	
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype get 
 	 */
 	public double getY() {
-		assertClassInvariants();
 		return y;
 	}
 	
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype get 
 	 */
-	public double getZ() {
-		assertClassInvariants();
+	public double getZ(){
 		return z;
 	}
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype set 
 	 */
-	public void setX(double x) {
+	public void setX(double x) throws IllegalCoordinateException {
 		this.x = x;
 		assertClassInvariants();
 	}
 	
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype set 
 	 */
-	public void setY(double y) {
+	public void setY(double y) throws IllegalCoordinateException {
 		this.y = y;
 		assertClassInvariants();
 	}
 	
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype set 
 	 */
-	public void setZ(double z) {
+	public void setZ(double z) throws IllegalCoordinateException {
 		this.z = z;
 		assertClassInvariants();
 	}
@@ -126,7 +131,6 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public int hashCode() {
-		assertClassInvariants();
 		final int prime = 31;
 		int result = 1;
 		long temp;
@@ -146,7 +150,6 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public String toString() {
-		assertClassInvariants();
 		return "CartesianCoordinate [x=" + x + ", y=" + y + ", z=" + z + "]";
 	}
 
@@ -155,17 +158,17 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
-		assertClassInvariants();
 		return this;
 	}
 
 
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype conversion
 	 * @see org.wahlzeit.model.Coordinate#getSphericCoordinate()
 	 */
 	@Override
-	public SphericCoordinate asSphericCoordinate() {
+	public SphericCoordinate asSphericCoordinate() throws IllegalCoordinateException {
 		assertClassInvariants();
 		double radius = Math.sqrt(Math.pow(x, 2.0) + Math.pow(y, 2.0) + Math.pow(z, 2.0));
 		if(radius == 0) {
@@ -181,14 +184,14 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @see org.wahlzeit.model.AbstractCoordinate#assertClassInvariants()
 	 */
 	@Override
-	public void assertClassInvariants() {
+	public void assertClassInvariants() throws IllegalCoordinateException {
 		try {		
 			assertValidDouble(x, "Invalid X Value!");
 			assertValidDouble(y, "Invalid Y Value!");
 			assertValidDouble(z, "Invalid Z Value!");
 		}
 		catch(InvalidValueException e) {
-			throw new IllegalStateException("Illegal state of coordinate!");
+			throw new IllegalCoordinateException("Illegal state of coordinate!");
 		}
 	}
 

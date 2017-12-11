@@ -1,5 +1,11 @@
 package org.wahlzeit.model;
 
+import static org.wahlzeit.utils.Assertions.*;
+
+import org.wahlzeit.utils.exceptions.IllegalOwlException;
+
+import com.google.appengine.api.memcache.InvalidValueException;
+
 public class Owl {
 	
 	private String name;
@@ -9,16 +15,14 @@ public class Owl {
 	private Species species;
 	private Color color;
 	
-	public Owl() {
-		
-	}
-	
-	public Owl(String name, int age, Gender gender, Species species, Color color) {
+	public Owl(String name, int age, Gender gender, Species species, Color color) throws IllegalOwlException {
 		this.name = name;
 		this.age = age;
 		this.gender = gender;
 		this.species = species;
 		this.color = color;
+		
+		assertClassInvariants();
 	}
 	
 	/* (non-Javadoc)
@@ -85,10 +89,12 @@ public class Owl {
 	}
 
 	/**
+	 * @throws IllegalOwlException 
 	 * @methodtype set	 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws IllegalOwlException {
 		this.name = name;
+		assertClassInvariants();
 	}
 
 	/**
@@ -99,10 +105,12 @@ public class Owl {
 	}
 
 	/**
+	 * @throws IllegalOwlException 
 	 * @methodtype set	 
 	 */
-	public void setAge(int age) {
+	public void setAge(int age) throws IllegalOwlException {
 		this.age = age;
+		assertClassInvariants();
 	}
 
 	/**
@@ -113,10 +121,12 @@ public class Owl {
 	}
 
 	/**
+	 * @throws IllegalOwlException 
 	 * @methodtype set	 
 	 */
-	public void setGender(Gender gender) {
+	public void setGender(Gender gender) throws IllegalOwlException {
 		this.gender = gender;
+		assertClassInvariants();
 	}
 
 	/**
@@ -127,10 +137,12 @@ public class Owl {
 	}
 
 	/**
+	 * @throws IllegalOwlException 
 	 * @methodtype set	 
 	 */
-	public void setSpecies(Species species) {
+	public void setSpecies(Species species) throws IllegalOwlException {
 		this.species = species;
+		assertClassInvariants();
 	}
 
 	/**
@@ -141,10 +153,24 @@ public class Owl {
 	}
 
 	/**
+	 * @throws IllegalOwlException 
 	 * @methodtype set	 
 	 */
-	public void setColor(Color color) {
+	public void setColor(Color color) throws IllegalOwlException {
 		this.color = color;
+		assertClassInvariants();
+	}
+	
+	private void assertClassInvariants() throws IllegalOwlException {
+		try{
+			assertValidString(name, "Don't treat the owl like an object, give her a name!");
+			assertPositive(age, "How can a photo show an owl that is not born yet?");
+			assertNotNull(gender, "The owl should have a valid gender!");
+			assertNotNull(species, "The owl should have a species!");
+			assertNotNull(color, "The owl sould have a clolor!");
+		}catch(InvalidValueException e) {
+			throw new IllegalOwlException("Illegal state of owl object: " + e.getMessage());
+		}
 	}
 
 }

@@ -3,6 +3,7 @@ package org.wahlzeit.model;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.wahlzeit.model.owl.OwlSuite;
 import org.wahlzeit.model.persistence.PersistenceSuite;
 
 @RunWith(Suite.class)
@@ -16,7 +17,8 @@ import org.wahlzeit.model.persistence.PersistenceSuite;
 				LocationTest.class,
 				TagsTest.class,
 				UserStatusTest.class, 
-				ValueTest.class })
+				ValueTest.class,
+				OwlSuite.class})
 
 public class ModelSuite {
 

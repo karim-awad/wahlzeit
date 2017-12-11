@@ -2,6 +2,10 @@
  * 
  */
 package org.wahlzeit.model;
+import static org.wahlzeit.utils.Assertions.*;
+import org.wahlzeit.utils.exceptions.IllegalSpeciesException;
+
+import com.google.appengine.api.memcache.InvalidValueException;
 
 /**
  * @author Karim Awad
@@ -14,19 +18,18 @@ public class Species {
 	private String family;
 	private boolean endangered;
 	
-	
-	public Species() {
-		
-	}
 	/**
 	 * @param name
 	 * @param family
 	 * @param endangered
+	 * @throws IllegalSpeciesException 
 	 */
-	public Species(String name, String family, boolean endangered) {
+	public Species(String name, String family, boolean endangered) throws IllegalSpeciesException {
 		this.name = name;
 		this.family = family;
 		this.endangered = endangered;
+		
+		assertClassInvariants();
 	}
 	
 	/* (non-Javadoc)
@@ -86,11 +89,13 @@ public class Species {
 		return name;
 	}
 	/**
+	 * @throws IllegalSpeciesException 
 	 * @methodtype set	 
 	 * @methodproperty primitive
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws IllegalSpeciesException {
 		this.name = name;
+		assertClassInvariants();
 	}
 	/**
 	 * @methodtype get
@@ -100,11 +105,13 @@ public class Species {
 		return family;
 	}
 	/**
+	 * @throws IllegalSpeciesException 
 	 * @methodtype set	 
 	 * @methodproperty primitive
 	 */
-	public void setFamily(String family) {
+	public void setFamily(String family) throws IllegalSpeciesException {
 		this.family = family;
+		assertClassInvariants();
 	}
 	/**
 	 * @methodtype get
@@ -121,7 +128,16 @@ public class Species {
 		this.endangered = endangered;
 	}
 	/**
-	 * 
+	 * @throws IllegalSpeciesException 
+	 * @methodtype assertion
 	 */
+	private void assertClassInvariants() throws IllegalSpeciesException {
+		try {
+			assertValidString(name, "The species should not have a valid name!");
+			assertValidString(family, "The species family should be valid!");
+		}catch(InvalidValueException e) {
+			throw new IllegalSpeciesException("Invalid Species object state: " + e.getMessage());
+		}
+	}
 
 }

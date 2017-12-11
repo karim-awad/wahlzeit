@@ -14,6 +14,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
 
 public class CoordinateTest {
@@ -42,7 +43,7 @@ public class CoordinateTest {
 	private SphericCoordinate earth2;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws IllegalCoordinateException {
 		cartesian = new CartesianCoordinate(33.0, 52.0, 120.0);
 		cartesian1 = new CartesianCoordinate(33.0, 52.0, 120.0);
 		cartesian2 = new CartesianCoordinate(33.0, 52.0, 99.0);
@@ -65,7 +66,7 @@ public class CoordinateTest {
 	}
 	
 	@Test
-	public void testConversion() {
+	public void testConversion() throws IllegalCoordinateException {
 		SphericCoordinate cartToSpher = cartesian.asSphericCoordinate();
 		assertTrue(cartToSpher.isEqual(cartesian));
 		
@@ -76,50 +77,50 @@ public class CoordinateTest {
 	}
 	
 	@Test()
-	public void testClassInvariants() {
+	public void testClassInvariants() throws IllegalCoordinateException {
 		Coordinate test;
 		try{
 			test = new SphericCoordinate(0, 0, -1);
 			fail();}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		try{
 			test = new SphericCoordinate(0, -1, 0);
 			fail();}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		try{
 			test = new SphericCoordinate(0, -1, 0);
 			fail();}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		try{
 			test = new SphericCoordinate(-1, 0, 0);
 			fail();}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		try{
 			test = new CartesianCoordinate(0, 0, Double.NaN);
 			fail();}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		try{
 			test = new CartesianCoordinate(0, Double.NEGATIVE_INFINITY, 0);
 			fail();}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		CartesianCoordinate test1 = new CartesianCoordinate(0, 0, -1);
 		try{
 			test1.setX(Double.NaN);
 			fail();
 			}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		try{
 			test1.setX(Double.NEGATIVE_INFINITY);
 			fail();
 			}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		SphericCoordinate test2 = new SphericCoordinate();
 		
@@ -127,18 +128,18 @@ public class CoordinateTest {
 			test2.setRadius(-1);
 			fail();
 			}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 		try{
 			test2.setLatitude(Double.NaN);
 			fail();
 			}
-		catch(IllegalStateException e) {};
+		catch(IllegalCoordinateException e) {};
 		
 	}
 	
 	@Test
-	public void testGetDistance() {
+	public void testGetDistance() throws IllegalCoordinateException {
 		//same coordinates
 		assertEquals(0.0, cartesian.getDistance(cartesian1),EPSILON);
 		assertEquals(0.0, spheric.getDistance(spheric1),EPSILON);
@@ -164,6 +165,7 @@ public class CoordinateTest {
 		
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testEqualsObject() { //also implicitly tests isEqual()
 		

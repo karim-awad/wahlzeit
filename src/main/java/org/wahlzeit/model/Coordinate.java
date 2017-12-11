@@ -9,44 +9,51 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
 public interface Coordinate {
 
 	/**
+	 * @throws IllegalCoordinateException 
 	 * @methodtype Conversion
 	 * returns Coordinate in form of a CartesianCoordinate
 	 */
-	public CartesianCoordinate asCartesianCoordinate();
+	public CartesianCoordinate asCartesianCoordinate() throws IllegalCoordinateException;
 	
 	/** 
+	 * @throws IllegalCoordinateException 
 	 * @methodtype get
 	 * returns Distance between two coordinates
 	 */
-	public double getCartesianDistance(Coordinate coord);
+	public double getCartesianDistance(Coordinate coord) throws IllegalCoordinateException;
 	
 	/**
-	 *  @methodtype get
+	 *  @throws IllegalCoordinateException 
+	 * @methodtype get
 	 * returns Coordinate in form of a SphericCoordinate
 	 */
-	public SphericCoordinate asSphericCoordinate();
+	public SphericCoordinate asSphericCoordinate() throws IllegalCoordinateException;
 	
 	/** 
+	 * @throws IllegalCoordinateException 
 	 * @methodtype get
 	 * returns Distance between two coordinates
 	 */
-	public double getSphericDistance(Coordinate coord);
+	public double getSphericDistance(Coordinate coord) throws IllegalCoordinateException;
 	
 	/** 
+	 * @throws IllegalCoordinateException 
 	 * @methodtype get
 	 * returns Distance between two coordinates
 	 */
-	public double getDistance(Coordinate coord);
+	public double getDistance(Coordinate coord) throws IllegalCoordinateException;
 	
 	/** 
+	 * @throws IllegalCoordinateException 
 	 * @methodtype Compare
 	 * 
 	 * tests equality of coordinates
 	 */
-	public boolean isEqual(Coordinate coord);
+	public boolean isEqual(Coordinate coord) throws IllegalCoordinateException;
 
 }
