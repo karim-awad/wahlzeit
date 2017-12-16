@@ -14,9 +14,9 @@ import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
 public class SphericCoordinate extends AbstractCoordinate {
 
-	private double latitude;
-	private double longitude;
-	private double radius;
+	private final double latitude;
+	private final double longitude;
+	private final double radius;
 
 	static final double EPSILON = 0.0001;
 
@@ -112,9 +112,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @throws IllegalCoordinateException 
 	 * @methodtype set
 	 */
-	public void setLatitude(double latitude) throws IllegalCoordinateException {
-		this.latitude = latitude;
-		assertClassInvariants();
+	public SphericCoordinate setLatitude(double latitude) throws IllegalCoordinateException {
+		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
 	/**
@@ -128,9 +127,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @throws IllegalCoordinateException 
 	 * @methodtype set
 	 */
-	public void setLongitude(double longitude) throws IllegalCoordinateException {
-		this.longitude = longitude;
-		assertClassInvariants();
+	public SphericCoordinate setLongitude(double longitude) throws IllegalCoordinateException {
+		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
 	/**
@@ -144,9 +142,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @throws IllegalCoordinateException 
 	 * @methodtype set
 	 */
-	public void setRadius(double radius) throws IllegalCoordinateException {
-		this.radius = radius;
-		assertClassInvariants();
+	public SphericCoordinate setRadius(double radius) throws IllegalCoordinateException {
+		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
 	/**
@@ -156,16 +153,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(latitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(longitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(radius);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
+		return toString().hashCode();
 	}
 
 	/**

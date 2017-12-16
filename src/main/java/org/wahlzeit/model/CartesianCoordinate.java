@@ -16,9 +16,9 @@ import com.google.appengine.api.memcache.InvalidValueException;
 
 public class CartesianCoordinate extends AbstractCoordinate{
 
-	private double x;
-	private double y;
-	private double z;
+	private final double x;
+	private final double y;
+	private final double z;
 	
 	/**@throws IllegalCoordinateException 
 	 * @methodtype constructor
@@ -102,27 +102,24 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @throws IllegalCoordinateException 
 	 * @methodtype set 
 	 */
-	public void setX(double x) throws IllegalCoordinateException {
-		this.x = x;
-		assertClassInvariants();
+	public CartesianCoordinate setX(double x) throws IllegalCoordinateException {
+		return new CartesianCoordinate(x, y, z);
 	}
 	
 	/**
 	 * @throws IllegalCoordinateException 
 	 * @methodtype set 
 	 */
-	public void setY(double y) throws IllegalCoordinateException {
-		this.y = y;
-		assertClassInvariants();
+	public CartesianCoordinate setY(double y) throws IllegalCoordinateException {
+		return new CartesianCoordinate(x, y, z);
 	}
 	
 	/**
 	 * @throws IllegalCoordinateException 
 	 * @methodtype set 
 	 */
-	public void setZ(double z) throws IllegalCoordinateException {
-		this.z = z;
-		assertClassInvariants();
+	public CartesianCoordinate setZ(double z) throws IllegalCoordinateException {
+		return new CartesianCoordinate(x, y, z);
 	}
 	
 
@@ -131,16 +128,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(x);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(z);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
+		return toString().hashCode();
 	}
 	
 
