@@ -122,16 +122,6 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		return new CartesianCoordinate(x, y, z);
 	}
 	
-
-	/**
-	 * @methodtype conversion 
-	 */
-	@Override
-	public int hashCode() {
-		return toString().hashCode();
-	}
-	
-
 	
 	/**
 	 * @methodtype conversion

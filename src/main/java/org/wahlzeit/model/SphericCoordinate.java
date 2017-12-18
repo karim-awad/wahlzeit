@@ -12,6 +12,8 @@ package org.wahlzeit.model;
 import static org.wahlzeit.utils.Assertions.*;
 import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
+import com.google.appengine.api.memcache.InvalidValueException;
+
 public class SphericCoordinate extends AbstractCoordinate {
 
 	private final double latitude;
@@ -149,16 +151,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype conversion
 	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return toString().hashCode();
-	}
-
-	/**
-	 * @methodtype conversion
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -174,6 +166,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 		if(longitude < 0 || latitude < 0 || radius < 0) {
 			throw new IllegalCoordinateException("Invalid state of spheric Coordinate!");
 		};
+		try {		
+			assertValidDouble(longitude, "Invalid longitude!");
+			assertValidDouble(latitude, "Invalid latitude!");
+			assertValidDouble(radius, "Invalid radius!");
+		}
+		catch(InvalidValueException e) {
+			throw new IllegalCoordinateException("Illegal state of spheric coordinate!");
+		}
 
 	}
 

@@ -111,13 +111,13 @@ public class CoordinateTest {
 		
 		CartesianCoordinate test1 = new CartesianCoordinate(0, 0, -1);
 		try{
-			test1.setX(Double.NaN);
+			test1 = test1.setX(Double.NaN);
 			fail();
 			}
 		catch(IllegalCoordinateException e) {};
 		
 		try{
-			test1.setX(Double.NEGATIVE_INFINITY);
+			test1 = test1.setX(Double.NEGATIVE_INFINITY);
 			fail();
 			}
 		catch(IllegalCoordinateException e) {};
@@ -125,13 +125,13 @@ public class CoordinateTest {
 		SphericCoordinate test2 = new SphericCoordinate();
 		
 		try{
-			test2.setRadius(-1);
+			test2 = test2.setRadius(-1);
 			fail();
 			}
 		catch(IllegalCoordinateException e) {};
 		
 		try{
-			test2.setLatitude(Double.NaN);
+			test2 = test2.setLatitude(Double.NaN);
 			fail();
 			}
 		catch(IllegalCoordinateException e) {};

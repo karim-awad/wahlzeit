@@ -114,5 +114,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 			return false;
 		}
 	}
+	
+
+	/**
+	 * @methodtype conversion
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
 
 }
