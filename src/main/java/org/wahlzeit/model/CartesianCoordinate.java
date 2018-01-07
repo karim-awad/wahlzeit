@@ -10,37 +10,40 @@
 package org.wahlzeit.model;
 
 import static org.wahlzeit.utils.Assertions.*;
-import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
+import java.util.Hashtable;
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 import com.google.appengine.api.memcache.InvalidValueException;
 
 public class CartesianCoordinate extends AbstractCoordinate{
+	
+	protected static Hashtable<Integer, CartesianCoordinate> sharedCoordinates = new Hashtable<Integer, CartesianCoordinate>(); 
 
 	private final double x;
 	private final double y;
 	private final double z;
 	
-	/**@throws IllegalCoordinateException 
-	 * @methodtype constructor
-	 * 
-	 */
-	public CartesianCoordinate() throws IllegalCoordinateException {
-		x = 0.0;
-		y = 0.0;
-		z = 0.0;
+	public static CartesianCoordinate getCartesianCoordinate(double x, double y, double z) throws IllegalCoordinateException {
+		CartesianCoordinate retCoordinate = new CartesianCoordinate(x, y, z);
+		CartesianCoordinate sharedCoordinate = sharedCoordinates.get(retCoordinate.hashCode());
 		
-		assertClassInvariants();
+		if(sharedCoordinate == null) {
+			sharedCoordinates.put(retCoordinate.hashCode(), retCoordinate);
+			return retCoordinate;
+		}
+		
+		return sharedCoordinate;
 	}
-
+	
 	/**@throws IllegalCoordinateException 
 	 * @methodtype constructor
 	 * 
 	 */
-	public CartesianCoordinate(double x, double y, double z) throws IllegalCoordinateException {
+	private CartesianCoordinate(double x, double y, double z) throws IllegalCoordinateException {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		
+				
 		assertClassInvariants();
 	}
 	
@@ -97,31 +100,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	public double getZ(){
 		return z;
-	}
-	/**
-	 * @throws IllegalCoordinateException 
-	 * @methodtype set 
-	 */
-	public CartesianCoordinate setX(double x) throws IllegalCoordinateException {
-		return new CartesianCoordinate(x, y, z);
-	}
-	
-	/**
-	 * @throws IllegalCoordinateException 
-	 * @methodtype set 
-	 */
-	public CartesianCoordinate setY(double y) throws IllegalCoordinateException {
-		return new CartesianCoordinate(x, y, z);
-	}
-	
-	/**
-	 * @throws IllegalCoordinateException 
-	 * @methodtype set 
-	 */
-	public CartesianCoordinate setZ(double z) throws IllegalCoordinateException {
-		return new CartesianCoordinate(x, y, z);
-	}
-	
+	}	
 	
 	/**
 	 * @methodtype conversion
@@ -150,12 +129,12 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		assertClassInvariants();
 		double radius = Math.sqrt(Math.pow(x, 2.0) + Math.pow(y, 2.0) + Math.pow(z, 2.0));
 		if(radius == 0) {
-			return new SphericCoordinate(0, 0, 0);
+			return SphericCoordinate.getSphericCoordinate(0, 0, 0);
 		}
 		double latitude = Math.acos(z/radius);
 		double longitude = Math.atan2(y, x);
 		
-		return new SphericCoordinate(latitude, longitude, radius);
+		return SphericCoordinate.getSphericCoordinate(latitude, longitude, radius);
 	}
 
 	/* (non-Javadoc)

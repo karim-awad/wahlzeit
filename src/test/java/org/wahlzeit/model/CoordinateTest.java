@@ -44,25 +44,25 @@ public class CoordinateTest {
 	
 	@Before
 	public void setUp() throws IllegalCoordinateException {
-		cartesian = new CartesianCoordinate(33.0, 52.0, 120.0);
-		cartesian1 = new CartesianCoordinate(33.0, 52.0, 120.0);
-		cartesian2 = new CartesianCoordinate(33.0, 52.0, 99.0);
-		cartesian3 = new CartesianCoordinate(33.0, 90.0, 120.0);
-		cartesian4 = new CartesianCoordinate(5.0, 52.0, 120.0);
-		cartesian5 = new CartesianCoordinate(0.0, 0.0, 0.0);
-		cartesian6 = new CartesianCoordinate(1.0, 0.0, 2.0);
-		cartesian7 = new CartesianCoordinate(-1.0, 2.0, 0.0);
-		cartesian8 = new CartesianCoordinate(0.0, 2.0, 1.0);
-		cartesian9 = new CartesianCoordinate(1.0, 2.0, -2.0);
+		cartesian = CartesianCoordinate.getCartesianCoordinate(33.0, 52.0, 120.0);
+		cartesian1 = CartesianCoordinate.getCartesianCoordinate(33.0, 52.0, 120.0);
+		cartesian2 = CartesianCoordinate.getCartesianCoordinate(33.0, 52.0, 99.0);
+		cartesian3 = CartesianCoordinate.getCartesianCoordinate(33.0, 90.0, 120.0);
+		cartesian4 = CartesianCoordinate.getCartesianCoordinate(5.0, 52.0, 120.0);
+		cartesian5 = CartesianCoordinate.getCartesianCoordinate(0.0, 0.0, 0.0);
+		cartesian6 = CartesianCoordinate.getCartesianCoordinate(1.0, 0.0, 2.0);
+		cartesian7 = CartesianCoordinate.getCartesianCoordinate(-1.0, 2.0, 0.0);
+		cartesian8 = CartesianCoordinate.getCartesianCoordinate(0.0, 2.0, 1.0);
+		cartesian9 = CartesianCoordinate.getCartesianCoordinate(1.0, 2.0, -2.0);
 		
-		spheric = new SphericCoordinate(33.0, 52.0, 120.0);
-		spheric1 = new SphericCoordinate(33.0, 52.0, 120.0);
-		spheric2 = new SphericCoordinate(33, 52.0, 0);
+		spheric = SphericCoordinate.getSphericCoordinate(33.0, 52.0, 120.0);
+		spheric1 = SphericCoordinate.getSphericCoordinate(33.0, 52.0, 120.0);
+		spheric2 = SphericCoordinate.getSphericCoordinate(33, 52.0, 0);
 		
 		//Berlin
-		earth1 = new SphericCoordinate(52.517, 13.40, 6370);
+		earth1 = SphericCoordinate.getSphericCoordinate(52.517, 13.40, 6370);
 		//Tokio
-		earth2 = new SphericCoordinate(35.70, 139.767, 6370);
+		earth2 = SphericCoordinate.getSphericCoordinate(35.70, 139.767, 6370);
 	}
 	
 	@Test
@@ -80,60 +80,33 @@ public class CoordinateTest {
 	public void testClassInvariants() throws IllegalCoordinateException {
 		Coordinate test;
 		try{
-			test = new SphericCoordinate(0, 0, -1);
+			test = SphericCoordinate.getSphericCoordinate(0, 0, -1);
 			fail();}
 		catch(IllegalCoordinateException e) {};
 		
 		try{
-			test = new SphericCoordinate(0, -1, 0);
+			test = SphericCoordinate.getSphericCoordinate(0, -1, 0);
 			fail();}
 		catch(IllegalCoordinateException e) {};
 		
 		try{
-			test = new SphericCoordinate(0, -1, 0);
+			test = SphericCoordinate.getSphericCoordinate(0, -1, 0);
 			fail();}
 		catch(IllegalCoordinateException e) {};
 		
 		try{
-			test = new SphericCoordinate(-1, 0, 0);
+			test = SphericCoordinate.getSphericCoordinate(-1, 0, 0);
 			fail();}
 		catch(IllegalCoordinateException e) {};
 		
 		try{
-			test = new CartesianCoordinate(0, 0, Double.NaN);
+			test = SphericCoordinate.getSphericCoordinate(0, 0, Double.NaN);
 			fail();}
 		catch(IllegalCoordinateException e) {};
 		
 		try{
-			test = new CartesianCoordinate(0, Double.NEGATIVE_INFINITY, 0);
+			test = SphericCoordinate.getSphericCoordinate(0, Double.NEGATIVE_INFINITY, 0);
 			fail();}
-		catch(IllegalCoordinateException e) {};
-		
-		CartesianCoordinate test1 = new CartesianCoordinate(0, 0, -1);
-		try{
-			test1 = test1.setX(Double.NaN);
-			fail();
-			}
-		catch(IllegalCoordinateException e) {};
-		
-		try{
-			test1 = test1.setX(Double.NEGATIVE_INFINITY);
-			fail();
-			}
-		catch(IllegalCoordinateException e) {};
-		
-		SphericCoordinate test2 = new SphericCoordinate();
-		
-		try{
-			test2 = test2.setRadius(-1);
-			fail();
-			}
-		catch(IllegalCoordinateException e) {};
-		
-		try{
-			test2 = test2.setLatitude(Double.NaN);
-			fail();
-			}
 		catch(IllegalCoordinateException e) {};
 		
 	}
@@ -179,6 +152,12 @@ public class CoordinateTest {
 		assertFalse(cartesian.equals(null));
 		assertFalse(cartesian.equals(new Location()));
 		assertTrue(cartesian.equals(cartesian));
+	}
+	
+	@Test
+	public void testSharedCoordinates() {
+		assertTrue(cartesian == cartesian1);
+		assertTrue(spheric == spheric1);
 	}
 
 }

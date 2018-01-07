@@ -10,35 +10,40 @@
 package org.wahlzeit.model;
 
 import static org.wahlzeit.utils.Assertions.*;
-import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
+import java.util.Hashtable;
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 import com.google.appengine.api.memcache.InvalidValueException;
 
 public class SphericCoordinate extends AbstractCoordinate {
-
+	
+	protected static Hashtable<Integer, SphericCoordinate> sharedCoordinates = new Hashtable<Integer, SphericCoordinate>(); 
+	
 	private final double latitude;
 	private final double longitude;
 	private final double radius;
 
 	static final double EPSILON = 0.0001;
 
+	public static SphericCoordinate getSphericCoordinate(double latitude, double longitude, double radius) throws IllegalCoordinateException {
+		SphericCoordinate retCoor = new SphericCoordinate(latitude, longitude, radius);
+		SphericCoordinate sharedCoordinate = sharedCoordinates.get(retCoor.hashCode());
+		if(sharedCoordinate == null) {
+			sharedCoordinates.put(retCoor.hashCode(), retCoor);
+			return retCoor;
+		}
+		return sharedCoordinate;
+	}
+	
 	/**@throws IllegalCoordinateException 
 	 * @methodtype constructor
 	 * 
 	 */
-	public SphericCoordinate() throws IllegalCoordinateException {
-		longitude = 0.0;
-		latitude = 0.0;
-		radius = 0.0;
-		
-		assertClassInvariants();
-	}
-
-	public SphericCoordinate(double latitude, double longitude, double radius) throws IllegalCoordinateException {
+	private SphericCoordinate(double latitude, double longitude, double radius) throws IllegalCoordinateException {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
-		
+				
 		assertClassInvariants();
 	}
 
@@ -55,7 +60,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double y = radius * Math.sin(latitude) * Math.sin(longitude);
 		double z = radius * Math.cos(latitude);
 
-		return new CartesianCoordinate(x, y, z);
+		return CartesianCoordinate.getCartesianCoordinate(x, y, z);
 	}
 
 	/**
@@ -111,41 +116,18 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	/**
-	 * @throws IllegalCoordinateException 
-	 * @methodtype set
-	 */
-	public SphericCoordinate setLatitude(double latitude) throws IllegalCoordinateException {
-		return new SphericCoordinate(latitude, longitude, radius);
-	}
-
-	/**
 	 * @methodtype get
 	 */
 	public double getLongitude() {
 		return longitude;
 	}
 
-	/**
-	 * @throws IllegalCoordinateException 
-	 * @methodtype set
-	 */
-	public SphericCoordinate setLongitude(double longitude) throws IllegalCoordinateException {
-		return new SphericCoordinate(latitude, longitude, radius);
-	}
 
 	/**
 	 * @methodtype get
 	 */
 	public double getRadius() {
 		return radius;
-	}
-
-	/**
-	 * @throws IllegalCoordinateException 
-	 * @methodtype set
-	 */
-	public SphericCoordinate setRadius(double radius) throws IllegalCoordinateException {
-		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
 	/**
@@ -157,6 +139,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	public String toString() {
 		return "SphericCoordinate [latitude=" + latitude + ", longitude=" + longitude + ", radius=" + radius + "]";
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see org.wahlzeit.model.AbstractCoordinate#assertClassInvariants()

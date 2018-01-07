@@ -110,7 +110,6 @@ public abstract class AbstractCoordinate implements Coordinate {
 		try {
 			return isEqual((Coordinate) obj);
 		} catch (IllegalCoordinateException e) {
-			// TODO figure out, what to do here
 			return false;
 		}
 	}
