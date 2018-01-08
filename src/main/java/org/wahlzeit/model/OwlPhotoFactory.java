@@ -3,7 +3,19 @@ package org.wahlzeit.model;
 import java.util.logging.Logger;
 
 import org.wahlzeit.services.LogBuilder;
+import org.wahlzeit.utils.PatternInstance;
 
+/**
+ * An Factory for creating photos of owls and related objects.
+ * Uses singleton pattern, to guarantee that only one instance exists
+ */
+@PatternInstance(
+		patternName = "Factory",
+		participants = {"OwlPhotoFactory", "OwlPhoto"}
+		)
+/*@PatternInstance(
+	patternName = "Singleton",
+		participants = {"PhotoFactory"})*/
 public class OwlPhotoFactory extends PhotoFactory {
 
 	protected OwlPhotoFactory() {
