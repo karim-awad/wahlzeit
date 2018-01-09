@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.utils.PatternInstance;
 
+import com.googlecode.objectify.annotation.Subclass;
+
 /**
  * An Factory for creating photos of owls and related objects.
  * Uses singleton pattern, to guarantee that only one instance exists
@@ -16,6 +18,7 @@ import org.wahlzeit.utils.PatternInstance;
 /*@PatternInstance(
 	patternName = "Singleton",
 		participants = {"PhotoFactory"})*/
+@Subclass
 public class OwlPhotoFactory extends PhotoFactory {
 
 	protected OwlPhotoFactory() {

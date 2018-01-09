@@ -22,6 +22,8 @@ package org.wahlzeit.main;
 
 import org.wahlzeit.model.GlobalsManager;
 import org.wahlzeit.model.PhotoCaseManager;
+import org.wahlzeit.model.PhotoFactory;
+import org.wahlzeit.model.PhotoManager;
 import org.wahlzeit.model.OwlPhotoFactory;
 import org.wahlzeit.model.OwlPhotoManager;
 import org.wahlzeit.model.User;
@@ -60,10 +62,10 @@ public abstract class ModelMain extends AbstractMain {
 		UserManager.getInstance().init();
 
 		log.config(LogBuilder.createSystemMessage().addAction("init PhotoFactory").toString());
-		OwlPhotoFactory.initialize();
+		PhotoFactory.setInstance((PhotoFactory)OwlPhotoFactory.getInstance());
 
 		log.config(LogBuilder.createSystemMessage().addAction("load Photos").toString());
-		OwlPhotoManager.getInstance().init();
+		PhotoManager.getInstance().init();
 	}
 
 
