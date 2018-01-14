@@ -77,14 +77,11 @@ public class GermanModelConfig extends AbstractModelConfig {
 		return "Photo von " + HtmlUtil.asHref("/filter?userName=" + un, un);
 	}
 	
-	public String asPhotoCaption(String un, Owl owl, Location location) {
+	public String asPhotoCaption(String un, Owl owl, Location location) throws IllegalCoordinateException {
 		SphericCoordinate spherCoor = null;
-		try {
-			spherCoor = location.getCoordinate().asSphericCoordinate();
-		} catch (IllegalCoordinateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		spherCoor = location.getCoordinate().asSphericCoordinate();
+
 		String caption = HtmlUtil.asBold("Eule") + "<br>" 
 				+ "Name: " + owl.getName() + "<br>"
 				+ "Alter: " + owl.getAge() + "<br>"

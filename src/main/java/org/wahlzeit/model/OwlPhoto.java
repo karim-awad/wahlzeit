@@ -3,6 +3,8 @@
  */
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
+
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
@@ -34,7 +36,14 @@ public class OwlPhoto extends Photo {
 	 */
 	public String getCaption(ModelConfig cfg) {
 		String ownerName = UserManager.getInstance().getUserById(ownerId).getNickName();
-		return cfg.asPhotoCaption(ownerName, owl, location);
+		String ret;
+		try {
+			ret = cfg.asPhotoCaption(ownerName, owl, location);
+		}
+		catch(IllegalCoordinateException e) {
+			ret = "Unable to generate caption!";
+		}
+		return ret;
 	}
 	
 	/**

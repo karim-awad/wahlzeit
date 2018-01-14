@@ -24,6 +24,7 @@ import org.wahlzeit.services.Configuration;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
 import org.wahlzeit.utils.EnumValue;
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
 import java.io.Serializable;
 
@@ -238,7 +239,7 @@ public interface ModelConfig extends Configuration, Serializable {
 
 	String asPhotoCaption(String un);
 	
-	String asPhotoCaption(String un, Owl owl, Location location);
+	String asPhotoCaption(String un, Owl owl, Location location) throws IllegalCoordinateException;
 
 	String asPraiseString(double praise);
 

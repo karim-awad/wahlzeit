@@ -78,16 +78,13 @@ public class EnglishModelConfig extends AbstractModelConfig {
 	}
 	
 	/**
+	 * @throws IllegalCoordinateException 
 	 *
 	 */
-	public String asPhotoCaption(String un, Owl owl, Location location) {
+	public String asPhotoCaption(String un, Owl owl, Location location) throws IllegalCoordinateException {
 		SphericCoordinate spherCoor = null;
-		try {
-			spherCoor = location.getCoordinate().asSphericCoordinate();
-		} catch (IllegalCoordinateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		spherCoor = location.getCoordinate().asSphericCoordinate();
+
 		String caption = HtmlUtil.asBold("Owl") + "<br>" 
 				+ "Name: " + owl.getName() + "<br>"
 				+ "Age: " + owl.getAge() + "<br>" 
