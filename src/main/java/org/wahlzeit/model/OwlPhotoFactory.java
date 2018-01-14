@@ -15,9 +15,7 @@ import com.googlecode.objectify.annotation.Subclass;
 		patternName = "Factory",
 		participants = {"OwlPhotoFactory", "OwlPhoto"}
 		)
-/*@PatternInstance(
-	patternName = "Singleton",
-		participants = {"PhotoFactory"})*/
+
 @Subclass
 public class OwlPhotoFactory extends PhotoFactory {
 
@@ -35,6 +33,9 @@ public class OwlPhotoFactory extends PhotoFactory {
 	 * @methodtype get	 
 	 * @methodproperty primitive
 	 */
+	@PatternInstance(
+			patternName = "Singleton",
+			participants = {"PhotoFactory"})
 	public static synchronized OwlPhotoFactory getInstance() {
 		if (instance == null) {
 			log.config(LogBuilder.createSystemMessage().addAction("setting generic OwlPhotoFactory").toString());

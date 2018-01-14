@@ -30,13 +30,9 @@ import java.util.logging.Logger;
  * Uses singleton pattern, to guarantee that only one instance exists
  */
 @PatternInstance(
-		patternName = "Abstract Factory",
+		patternName = "Factory",
 		participants = {"PhotoFactory", "Photo"}
 		)
-/*@PatternInstance(
-		patternName = "Singleton",
-		participants = {"PhotoFactory"})*/
-
 public class PhotoFactory {
 
 	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
@@ -62,6 +58,9 @@ public class PhotoFactory {
 	/**
 	 * Public singleton access method.
 	 */
+	@PatternInstance(
+			patternName = "Singleton",
+			participants = {"PhotoFactory"})
 	public static synchronized PhotoFactory getInstance() {
 		if (instance == null) {
 			log.config(LogBuilder.createSystemMessage().addAction("setting generic PhotoFactory").toString());
