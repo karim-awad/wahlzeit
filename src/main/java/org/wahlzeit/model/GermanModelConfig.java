@@ -22,6 +22,7 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.services.Language;
 import org.wahlzeit.utils.HtmlUtil;
+import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -74,6 +75,26 @@ public class GermanModelConfig extends AbstractModelConfig {
 	 */
 	public String asPhotoCaption(String un) {
 		return "Photo von " + HtmlUtil.asHref("/filter?userName=" + un, un);
+	}
+	
+	public String asPhotoCaption(String un, Owl owl, Location location) {
+		SphericCoordinate spherCoor = null;
+		try {
+			spherCoor = location.getCoordinate().asSphericCoordinate();
+		} catch (IllegalCoordinateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String caption = HtmlUtil.asBold("Eule") + "<br>" 
+				+ "Name: " + owl.getName() + "<br>"
+				+ "Alter: " + owl.getAge() + "<br>"
+				+ "Spezies: " + owl.getSpeciesName() + "<br>"
+				+ HtmlUtil.asBold("Ort") + "<br>"
+				+ "L&auml;ngengrad: " + spherCoor.getLongitude() + "<br>"
+				+ "Breitengrad: " + spherCoor.getLatitude() + "<br>"
+				+ "<br>"
+				+ "Photo von " + HtmlUtil.asHref("/filter?userName=" + un, un) ;
+		return caption;
 	}
 
 	/**

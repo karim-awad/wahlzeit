@@ -22,6 +22,8 @@ package org.wahlzeit.handlers;
 
 import org.wahlzeit.model.AccessRights;
 import org.wahlzeit.model.Client;
+import org.wahlzeit.model.Owl;
+import org.wahlzeit.model.OwlPhoto;
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoFilter;
 import org.wahlzeit.model.PhotoId;
@@ -175,7 +177,7 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 	 */
 	protected void makePhotoCaption(UserSession us, WebPart page) {
 		PhotoId photoId = us.getPhotoId();
-		Photo photo = PhotoManager.getInstance().getPhoto(photoId);
+		OwlPhoto photo = (OwlPhoto) PhotoManager.getInstance().getPhoto(photoId);
 
 		WebPart caption = createWebPart(us, PartUtil.CAPTION_INFO_FILE);
 		caption.addString(Photo.CAPTION, getPhotoCaption(us, photo));

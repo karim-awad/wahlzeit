@@ -237,6 +237,8 @@ public interface ModelConfig extends Configuration, Serializable {
 	String asPhotoSummary(String un);
 
 	String asPhotoCaption(String un);
+	
+	String asPhotoCaption(String un, Owl owl, Location location);
 
 	String asPraiseString(double praise);
 

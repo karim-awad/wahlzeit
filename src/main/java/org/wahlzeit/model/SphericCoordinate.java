@@ -14,7 +14,9 @@ import static org.wahlzeit.utils.Assertions.*;
 import java.util.Hashtable;
 import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 import com.google.appengine.api.memcache.InvalidValueException;
+import com.googlecode.objectify.annotation.Subclass;
 
+@Subclass
 public class SphericCoordinate extends AbstractCoordinate {
 	
 	protected static Hashtable<Integer, SphericCoordinate> sharedCoordinates = new Hashtable<Integer, SphericCoordinate>(); 
@@ -35,6 +37,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return sharedCoordinate;
 	}
 	
+	public static SphericCoordinate getSphericCoordinate(double latitude, double longitude) throws IllegalCoordinateException {
+		SphericCoordinate retCoor = new SphericCoordinate(latitude, longitude);
+		SphericCoordinate sharedCoordinate = sharedCoordinates.get(retCoor.hashCode());
+		if(sharedCoordinate == null) {
+			sharedCoordinates.put(retCoor.hashCode(), retCoor);
+			return retCoor;
+		}
+		return sharedCoordinate;
+	}
+	
 	/**@throws IllegalCoordinateException 
 	 * @methodtype constructor
 	 * 
@@ -47,6 +59,17 @@ public class SphericCoordinate extends AbstractCoordinate {
 		assertClassInvariants();
 	}
 
+	/**@throws IllegalCoordinateException 
+	 * @methodtype constructor
+	 * 
+	 */
+	private SphericCoordinate(double latitude, double longitude) throws IllegalCoordinateException {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.radius = 6370; //Earthradius
+				
+		assertClassInvariants();
+	}
 	/**
 	 * @throws IllegalCoordinateException 
 	 * @methodtype conversion

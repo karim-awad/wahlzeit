@@ -23,14 +23,20 @@ package org.wahlzeit.handlers;
 import com.google.appengine.api.images.Image;
 import org.wahlzeit.agents.AsyncTaskExecutor;
 import org.wahlzeit.model.AccessRights;
+import org.wahlzeit.model.Gender;
+import org.wahlzeit.model.Location;
 import org.wahlzeit.model.ModelConfig;
+import org.wahlzeit.model.Owl;
+import org.wahlzeit.model.OwlPhoto;
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoManager;
+import org.wahlzeit.model.SphericCoordinate;
 import org.wahlzeit.model.Tags;
 import org.wahlzeit.model.User;
 import org.wahlzeit.model.UserSession;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.utils.StringUtil;
+import org.wahlzeit.utils.exceptions.IllegalOwlException;
 import org.wahlzeit.webparts.WebPart;
 
 import java.util.Map;
@@ -65,6 +71,11 @@ public class UploadPhotoFormHandler extends AbstractWebFormHandler {
 	 */
 	protected String doHandlePost(UserSession us, Map args) {
 		String tags = us.getAndSaveAsString(args, Photo.TAGS);
+		String owlName = us.getAndSaveAsString(args, OwlPhoto.OWLNAME);
+		int owlAge = Integer.parseInt((us.getAndSaveAsString(args, OwlPhoto.OWLAGE)));
+		String speciesName = us.getAndSaveAsString(args, OwlPhoto.OWLSPECIES);
+		Double locationLongitude = Double.parseDouble(us.getAndSaveAsString(args, OwlPhoto.LocationLongitude));
+		Double locationLatitude = Double.parseDouble(us.getAndSaveAsString(args, OwlPhoto.LocationLatitude));
 
 		ModelConfig config = us.getClient().getLanguageConfiguration();
 		if (!StringUtil.isLegalTagsString(tags)) {
@@ -77,21 +88,25 @@ public class UploadPhotoFormHandler extends AbstractWebFormHandler {
 			String fileName = us.getAsString(args, "fileName");
 			User user = (User) us.getClient();
 			Image uploadedImage = user.getUploadedImage();
-			Photo photo = pm.createPhoto(fileName, uploadedImage);
+			OwlPhoto photo = (OwlPhoto) pm.createPhoto(fileName, uploadedImage);
 
 			user.addPhoto(photo);
 
 			photo.setTags(new Tags(tags));
+			Owl owl = new Owl(owlName, owlAge, speciesName);
+			photo.setOwl(owl);
 
-			log.config(LogBuilder.createUserMessage().
-					addAction("Upload Photo").
-					addParameter("Photo", photo.getId().asString()).
-					addParameter("tags", photo.getTags().asString()).toString());
+			Location location = new Location(
+					SphericCoordinate.getSphericCoordinate(locationLongitude, locationLatitude));
+
+			photo.setLocation(location);
+			log.config(LogBuilder.createUserMessage().addAction("Upload Photo")
+					.addParameter("Photo", photo.getId().asString()).addParameter("tags", photo.getTags().asString())
+					.toString());
 
 			us.setTwoLineMessage(config.getPhotoUploadSucceeded(), config.getKeepGoing());
-			log.config(LogBuilder.createSystemMessage().
-					addAction("Calling async task to save Photo").
-					addParameter("ID", photo.getId().asString()).toString());
+			log.config(LogBuilder.createSystemMessage().addAction("Calling async task to save Photo")
+					.addParameter("ID", photo.getId().asString()).toString());
 
 			AsyncTaskExecutor.savePhotoAsync(photo.getId().asString());
 		} catch (Exception ex) {

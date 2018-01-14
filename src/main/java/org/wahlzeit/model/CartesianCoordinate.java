@@ -14,7 +14,9 @@ import static org.wahlzeit.utils.Assertions.*;
 import java.util.Hashtable;
 import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 import com.google.appengine.api.memcache.InvalidValueException;
+import com.googlecode.objectify.annotation.Subclass;
 
+@Subclass
 public class CartesianCoordinate extends AbstractCoordinate{
 	
 	protected static Hashtable<Integer, CartesianCoordinate> sharedCoordinates = new Hashtable<Integer, CartesianCoordinate>(); 

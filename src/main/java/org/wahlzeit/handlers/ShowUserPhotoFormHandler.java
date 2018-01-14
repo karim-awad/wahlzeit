@@ -22,6 +22,7 @@ package org.wahlzeit.handlers;
 
 import org.wahlzeit.model.AccessRights;
 import org.wahlzeit.model.ModelConfig;
+import org.wahlzeit.model.OwlPhoto;
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.model.PhotoManager;
@@ -67,7 +68,7 @@ public class ShowUserPhotoFormHandler extends AbstractWebFormHandler {
 		String tags = photo.getTags().asString();
 		tags = !StringUtil.isNullOrEmptyString(tags) ? tags : config.getNoTags();
 		part.maskAndAddString(Photo.TAGS, tags);
-
+		
 		String photoStatus = config.asValueString(photo.getStatus());
 		part.addString(Photo.STATUS, photoStatus);
 
