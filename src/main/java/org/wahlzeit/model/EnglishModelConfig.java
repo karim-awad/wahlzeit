@@ -88,7 +88,7 @@ public class EnglishModelConfig extends AbstractModelConfig {
 		String caption = HtmlUtil.asBold("Owl") + "<br>" 
 				+ "Name: " + owl.getName() + "<br>"
 				+ "Age: " + owl.getAge() + "<br>" 
-				+ "Species: " + owl.getSpeciesName() + "<br>"
+				+ "Species: " + owl.getType().getName() + "<br>"
 				+ HtmlUtil.asBold("Location") + "<br>"
 				+ "Longitude: " + spherCoor.getLongitude() + "<br>"
 				+ "Latitude: " + spherCoor.getLatitude() + "<br>"

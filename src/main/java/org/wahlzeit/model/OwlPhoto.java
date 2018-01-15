@@ -16,7 +16,6 @@ public class OwlPhoto extends Photo {
 	public final static String LocationLatitude = "LocationLatitude";
 
 
-
 	private Owl owl;
 	/**
 	 * 

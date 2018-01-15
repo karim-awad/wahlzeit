@@ -6,16 +6,21 @@ import org.wahlzeit.utils.exceptions.IllegalOwlException;
 
 import com.google.appengine.api.memcache.InvalidValueException;
 
-public class Owl {
+
+public class Owl{
 	
+
+	public OwlManager manager = OwlManager.getInstance();
+	protected OwlType owlType = null;
+
 	private String name;
 	private int age;
-	private String speciesName;
 	
-	public Owl(String name, int age, String speciesName) throws IllegalOwlException {
+
+	public Owl(String name, int age, OwlType type) throws IllegalOwlException {
 		this.name = name;
 		this.age = age;
-		this.speciesName = speciesName;
+		this.owlType = type;
 		
 		assertClassInvariants();
 	}
@@ -25,7 +30,7 @@ public class Owl {
 	 */
 	@Override
 	public String toString() {
-		return "Owl [name=" + name + ", age=" + age + ", species=" + speciesName + "]";
+		return "Owl [name=" + name + ", age=" + age + owlType.toString() + "]";
 	}
 
 	/* (non-Javadoc)
@@ -33,12 +38,7 @@ public class Owl {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + age;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((speciesName == null) ? 0 : speciesName.hashCode());
-		return result;
+		return toString().hashCode();
 	}
 
 	/* (non-Javadoc)
@@ -59,11 +59,6 @@ public class Owl {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (speciesName == null) {
-			if (other.speciesName != null)
-				return false;
-		} else if (!speciesName.equals(other.speciesName))
 			return false;
 		return true;
 	}
@@ -101,21 +96,20 @@ public class Owl {
 		assertClassInvariants();
 	}
 
-
+	
 	/**
 	 * @methodtype get
 	 */
-	public String getSpeciesName() {
-		return speciesName;
+	public OwlType getType() {
+		return owlType;
 	}
-
+	
+	
 	/**
-	 * @throws IllegalOwlException 
-	 * @methodtype set	 
+	 * @methodtype set
 	 */
-	public void setSpeciesName (String speciesName) throws IllegalOwlException {
-		this.speciesName = speciesName;
-		assertClassInvariants();
+	public void setType(OwlType type) {
+		this.owlType = type;
 	}
 
 	
@@ -123,7 +117,7 @@ public class Owl {
 		try{
 			assertValidString(name, "Don't treat the owl like an object, give her a name!");
 			assertPositive(age, "How can a photo show an owl that is not born yet?");
-			assertValidString(speciesName, "The owl should have a species!");
+			assertNotNull(owlType, "Owl should have a species");
 		}catch(InvalidValueException e) {
 			throw new IllegalOwlException("Illegal state of owl object: " + e.getMessage());
 		}

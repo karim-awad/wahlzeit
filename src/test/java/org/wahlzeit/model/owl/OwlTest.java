@@ -5,12 +5,21 @@ package org.wahlzeit.model.owl;
 
 import static org.junit.Assert.fail;
 
+import org.junit.ClassRule;
 import org.junit.Test;
-import org.wahlzeit.model.Gender;
+import org.junit.rules.RuleChain;
 import org.wahlzeit.model.Owl;
+import org.wahlzeit.model.OwlManager;
+import org.wahlzeit.testEnvironmentProvider.LocalDatastoreServiceTestConfigProvider;
+import org.wahlzeit.testEnvironmentProvider.RegisteredOfyEnvironmentProvider;
 import org.wahlzeit.utils.exceptions.IllegalOwlException;
 
-public class owlTest {
+public class OwlTest {
+	
+	@ClassRule
+	public static RuleChain ruleChain = RuleChain.
+			outerRule(new LocalDatastoreServiceTestConfigProvider()).
+			around(new RegisteredOfyEnvironmentProvider());
 
 	@Test
 	public void testClassInvariants() throws IllegalOwlException {
@@ -19,7 +28,7 @@ public class owlTest {
 		Owl owl = new Owl(null, -1, null);
 		fail();
 		}catch(IllegalOwlException e) {};
-		Owl owl = new Owl("Susie", 5, "Tyto alba");
+		Owl owl = OwlManager.getInstance().createOwl("Tyto alba", "Susie", 5);
 		try {
 			owl.setAge(-1);
 			fail();
@@ -30,10 +39,6 @@ public class owlTest {
 			fail();
 			}catch(IllegalOwlException e) {};
 			
-		try {
-			owl.setSpeciesName(null);
-			fail();
-			}catch(IllegalOwlException e) {};
 		
 	}
 

@@ -23,10 +23,10 @@ package org.wahlzeit.handlers;
 import com.google.appengine.api.images.Image;
 import org.wahlzeit.agents.AsyncTaskExecutor;
 import org.wahlzeit.model.AccessRights;
-import org.wahlzeit.model.Gender;
 import org.wahlzeit.model.Location;
 import org.wahlzeit.model.ModelConfig;
 import org.wahlzeit.model.Owl;
+import org.wahlzeit.model.OwlManager;
 import org.wahlzeit.model.OwlPhoto;
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoManager;
@@ -36,7 +36,6 @@ import org.wahlzeit.model.User;
 import org.wahlzeit.model.UserSession;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.utils.StringUtil;
-import org.wahlzeit.utils.exceptions.IllegalOwlException;
 import org.wahlzeit.webparts.WebPart;
 
 import java.util.Map;
@@ -93,7 +92,7 @@ public class UploadPhotoFormHandler extends AbstractWebFormHandler {
 			user.addPhoto(photo);
 
 			photo.setTags(new Tags(tags));
-			Owl owl = new Owl(owlName, owlAge, speciesName);
+			Owl owl = OwlManager.getInstance().createOwl(speciesName, owlName, owlAge);
 			photo.setOwl(owl);
 
 			Location location = new Location(

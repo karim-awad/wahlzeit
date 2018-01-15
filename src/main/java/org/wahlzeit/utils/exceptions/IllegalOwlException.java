@@ -8,6 +8,11 @@ public class IllegalOwlException extends Exception {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -8600340340452256564L;
+
+	/**
+	 * 
+	 */
 	public IllegalOwlException() {
 	}
 

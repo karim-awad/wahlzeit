@@ -85,7 +85,7 @@ public class GermanModelConfig extends AbstractModelConfig {
 		String caption = HtmlUtil.asBold("Eule") + "<br>" 
 				+ "Name: " + owl.getName() + "<br>"
 				+ "Alter: " + owl.getAge() + "<br>"
-				+ "Spezies: " + owl.getSpeciesName() + "<br>"
+				+ "Spezies: " + owl.getType().getName() + "<br>"
 				+ HtmlUtil.asBold("Ort") + "<br>"
 				+ "L&auml;ngengrad: " + spherCoor.getLongitude() + "<br>"
 				+ "Breitengrad: " + spherCoor.getLatitude() + "<br>"
