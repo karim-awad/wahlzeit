@@ -9,6 +9,10 @@ import java.util.List;
 import org.wahlzeit.services.ObjectManager;
 import org.wahlzeit.utils.exceptions.IllegalOwlException;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Serialize;
+
+@Entity
 public class OwlManager extends ObjectManager {
 
 	protected static final OwlManager instance = new OwlManager();
@@ -16,7 +20,9 @@ public class OwlManager extends ObjectManager {
 	/**
 	 * In-memory caches for Owls and Owltypes
 	 */
+	@Serialize
 	protected List<Owl> owls = new ArrayList<Owl>();
+	@Serialize
 	protected HashMap<String, OwlType> types = new HashMap<String, OwlType>();
 
 	/**
@@ -58,7 +64,7 @@ public class OwlManager extends ObjectManager {
 	 */
 	@Override
 	public String toString() {
-		return "OwlManager [types=" + types + "]";
+		return "OwlManager [types=" + types.toString() + "]";
 	}
 
 	/* (non-Javadoc)

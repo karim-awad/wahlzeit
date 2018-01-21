@@ -5,17 +5,22 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.utils.exceptions.IllegalCoordinateException;
 
+import com.googlecode.objectify.annotation.Serialize;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
 public class OwlPhoto extends Photo {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2510511121392525534L;
 	public final static String OWLNAME = "OwlName";
 	public final static String OWLAGE = "OwlAge";
 	public final static String OWLSPECIES = "OwlSpecies";
 	public final static String LocationLongitude = "LocationLongitude";
 	public final static String LocationLatitude = "LocationLatitude";
 
-
+	@Serialize
 	private Owl owl;
 	/**
 	 * 

@@ -18,6 +18,7 @@ import org.wahlzeit.utils.Assertions;
 import org.wahlzeit.utils.exceptions.IllegalOwlException;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Serialize;
 
 
 @Entity
@@ -26,6 +27,7 @@ public class OwlType extends DataObject {
 	private static final long serialVersionUID = 6593386202045535792L;
 	protected String name;
 	protected OwlType superType = null;
+	@Serialize
 	protected Set<OwlType> subTypes = new HashSet<OwlType>();
 	public OwlManager manager = OwlManager.getInstance();
 	
@@ -117,8 +119,7 @@ public class OwlType extends DataObject {
 	 */
 	@Override
 	public String toString() {
-		return "OwlType [name=" + name + ", superType=" + superType + ", subTypes=" + subTypes + ", manager=" + manager
-				+ "]";
+		return "OwlType [name=" + name + "]";
 	}
 
 
@@ -127,7 +128,13 @@ public class OwlType extends DataObject {
 	 */
 	@Override
 	public int hashCode() {
-		return toString().hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((manager == null) ? 0 : manager.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((subTypes == null) ? 0 : subTypes.hashCode());
+		result = prime * result + ((superType == null) ? 0 : superType.hashCode());
+		return result;
 	}
 
 

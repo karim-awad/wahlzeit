@@ -5,8 +5,9 @@ import static org.wahlzeit.utils.Assertions.*;
 import org.wahlzeit.utils.exceptions.IllegalOwlException;
 
 import com.google.appengine.api.memcache.InvalidValueException;
+import com.googlecode.objectify.annotation.Entity;
 
-
+@Entity
 public class Owl{
 	
 

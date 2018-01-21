@@ -11,6 +11,9 @@ import org.junit.rules.RuleChain;
 import org.wahlzeit.model.Owl;
 import org.wahlzeit.model.OwlType;
 import org.wahlzeit.utils.exceptions.IllegalOwlException;
+
+import com.google.appengine.api.memcache.InvalidValueException;
+
 import org.wahlzeit.testEnvironmentProvider.LocalDatastoreServiceTestConfigProvider;
 import org.wahlzeit.testEnvironmentProvider.RegisteredOfyEnvironmentProvider;
 
@@ -23,7 +26,7 @@ public class OwlTypeTest {
 			around(new RegisteredOfyEnvironmentProvider());
 
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = InvalidValueException.class)
 	public void testClassInvariants() {
 		OwlType type = new OwlType(null);
 	}
@@ -32,6 +35,7 @@ public class OwlTypeTest {
 	public void testSubtypes() {
 		OwlType superType = new OwlType("Supertype");
 		OwlType subType = new OwlType("Subtype");
+		superType.addSubType(subType);
 		Owl owl = null;
 		try {
 			owl = subType.createInstance("peter", 5);
