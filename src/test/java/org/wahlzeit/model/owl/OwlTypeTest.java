@@ -32,7 +32,7 @@ public class OwlTypeTest {
 	}
 	
 	@Test
-	public void testSubtypes() {
+	public void testSubtyping() {
 		OwlType superType = new OwlType("Supertype");
 		OwlType subType = new OwlType("Subtype");
 		superType.addSubType(subType);
@@ -44,7 +44,9 @@ public class OwlTypeTest {
 		}
 		
 		assertTrue(superType.hasInstance(owl));
-		assertTrue(subType.getSuperType().equals(superType));
+		assertTrue(subType.getSupertype().equals(superType));
+		assertTrue(superType.isSubtype(subType));
+		assertTrue(subType.isSupertype(superType));
 		
 	}
 

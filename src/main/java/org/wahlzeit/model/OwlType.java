@@ -58,7 +58,7 @@ public class OwlType extends DataObject {
 	
 	
 	public boolean hasInstance(Owl owl) {
-		if(owl == null) throw new IllegalArgumentException();
+		if(owl == null) return false;
 		
 		if(owl.getType() == this) {
 			return true;
@@ -73,11 +73,38 @@ public class OwlType extends DataObject {
 		return false;
 	}
 	
+	/**
+	 * checks whether parameter is a subtype of this
+	 */
+	public boolean isSubtype(OwlType subtype) {
+		if (subtype == null) return false;
+		
+		for (OwlType type : subTypes) {
+			if(subtype == type || type.isSubtype(subtype)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * checks whether parameter is a supertype of this
+	 */
+	public boolean isSupertype(OwlType superType) {
+		if (superType == null) return false;
+		
+		if(superType == this.superType) {
+			return true;
+		}else {
+			return this.superType.isSupertype(superType);
+		}
+	}
+	
 	
 	/**
 	 * @methodtype get
 	 */
-	public OwlType getSuperType() {
+	public OwlType getSupertype() {
 		return superType;
 	}
 	
