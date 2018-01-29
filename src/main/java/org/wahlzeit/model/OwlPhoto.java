@@ -9,22 +9,22 @@ import com.googlecode.objectify.annotation.Serialize;
 import com.googlecode.objectify.annotation.Subclass;
 
 /**
-+-------------------------------------------------------------------------------+
-|								Object Instantiation							|
-+-------------------------------------------------------------------------------+
-|Delegation: seperate-object													|
-|Selection: sub-classing 														|
-|Configuration: in-code															|
-|Instantiation: in-code															|
-|Initialization: in-second-step 												|
-|Building: default																|
-+-------------------------------------------------------------------------------+
-|Method Calls:																	|
-|-> OwlPhotoManager::createPhoto(String filename, Image uploadedImage)			|
-|	-> PhotoUtil.createPhoto(String filename, PhotoId id, Image uploadedImage)	|
-|		-> OwlPhotoFactory::createPhoto(PhotoId id)								|
-|			-> OwlPhoto::OwlPhoto(PhotoId id)									|
-+-------------------------------------------------------------------------------+
+-------------------------------------------------------------------------------
+Object Instantiation							
+-------------------------------------------------------------------------------
+Delegation: seperate-object													
+Selection: sub-classing 														
+Configuration: in-code															
+Instantiation: in-code															
+Initialization: in-second-step 												
+Building: default																
+-------------------------------------------------------------------------------
+Method Calls:																
+-> OwlPhotoManager::createPhoto(String filename, Image uploadedImage)		
+	-> PhotoUtil.createPhoto(String filename, PhotoId id, Image uploadedImage)
+		-> OwlPhotoFactory::createPhoto(PhotoId id)								
+			-> OwlPhoto::OwlPhoto(PhotoId id)									
+-------------------------------------------------------------------------------
 **/
 @Subclass
 public class OwlPhoto extends Photo {

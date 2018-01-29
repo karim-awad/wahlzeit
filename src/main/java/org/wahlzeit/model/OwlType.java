@@ -76,11 +76,11 @@ public class OwlType extends DataObject {
 	/**
 	 * checks whether parameter is a subtype of this
 	 */
-	public boolean isSubtype(OwlType subtype) {
-		if (subtype == null) return false;
+	public boolean isSubtype(OwlType type) {
+		if (type == null) return false;
 		
 		for (OwlType type : subTypes) {
-			if(subtype == type || type.isSubtype(subtype)) {
+			if(type == type || type.isSubtype(type)) {
 				return true;
 			}
 		}
@@ -90,13 +90,13 @@ public class OwlType extends DataObject {
 	/**
 	 * checks whether parameter is a supertype of this
 	 */
-	public boolean isSupertype(OwlType superType) {
-		if (superType == null) return false;
+	public boolean isSupertype(OwlType type) {
+		if (type == null) return false;
 		
-		if(superType == this.superType) {
+		if(type == this.superType) {
 			return true;
 		}else {
-			return this.superType.isSupertype(superType);
+			return this.superType.isSupertype(type);
 		}
 	}
 	

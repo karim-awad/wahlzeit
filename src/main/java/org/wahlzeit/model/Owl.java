@@ -8,21 +8,21 @@ import com.google.appengine.api.memcache.InvalidValueException;
 import com.googlecode.objectify.annotation.Entity;
 
 /**
-+----------------------------------------------------------------+
-|					Object Instantiation						 |
-+----------------------------------------------------------------+
-| Delegation: seperate-object 									 |
-| Selection: on-the-spot										 |
-| Configuration: in-code										 |
-| Instantiation: in-code										 |
-| Initialization: default										 |
-| Building: default												 |
-+----------------------------------------------------------------+
-| Method Calls:													 |
-| ->OwlManager::createOwl(String typeName, String name, int age) |
-| 	->OwlType::createInstance(String name, int age)				 |
-| 		->Owl::Owl(String name, int age, OwlType type)			 |
-+----------------------------------------------------------------+
+---------------------------------------------------------------
+Object Instantiation						 
+---------------------------------------------------------------
+ Delegation: seperate-object 									
+ Selection: on-the-spot										 
+ Configuration: in-code										 
+ Instantiation: in-code										 
+ Initialization: default										 
+ Building: default												 
+---------------------------------------------------------------
+ Method Calls:													
+ ->OwlManager::createOwl(String typeName, String name, int age) 
+ 	->OwlType::createInstance(String name, int age)				
+ 		->Owl::Owl(String name, int age, OwlType type)			
+---------------------------------------------------------------
 **/
 @Entity
 public class Owl{
